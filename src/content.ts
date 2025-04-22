@@ -1,10 +1,4 @@
-function debounce<T extends (...args: unknown[]) => void>(func: T, wait: number) {
-  let timeout: ReturnType<typeof setTimeout> | null = null;
-  return (...args: Parameters<T>) => {
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
-}
+import { debounce } from "~/utils";
 
 function setupMutationObserver() {
   let lastMode: "markdown" | "wysiwyg" | null = null;

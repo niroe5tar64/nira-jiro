@@ -28,6 +28,11 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true,
       target: "es2020",
     },
+    resolve: {
+      alias: {
+        "~/utils": path.resolve(__dirname, "./src/utils"),
+      },
+    },
     plugins: [
       viteStaticCopy({
         targets: [
