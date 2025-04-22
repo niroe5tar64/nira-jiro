@@ -10,12 +10,12 @@ export function setupMutationObserver() {
     const activeForm = document.querySelector("[field-id=description]");
     if (!activeForm) return;
 
-    const textarea = activeForm.querySelector("#description");
-    const wysiwyg = activeForm.querySelector("#description.richeditor-cover");
+    const hasTextarea = activeForm.querySelector("#description");
+    const isWysiwyg = activeForm.querySelector("#description.richeditor-cover");
 
     let newMode: InputMode = null;
-    if (textarea && !wysiwyg) newMode = "markdown";
-    if (textarea && wysiwyg) newMode = "wysiwyg";
+    if (hasTextarea && !isWysiwyg) newMode = "markdown";
+    if (hasTextarea && isWysiwyg) newMode = "wysiwyg";
 
     if (newMode && newMode !== lastMode) {
       lastMode = newMode;
