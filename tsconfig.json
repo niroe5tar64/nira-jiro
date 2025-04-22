@@ -4,6 +4,7 @@
     "paths": {
       "~/features": ["src/features"],
       "~/types": ["src/types"],
+      "~/ui": ["src/ui"],
       "~/utils": ["src/utils"]
     },
     "target": "ES2020",
