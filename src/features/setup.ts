@@ -1,13 +1,11 @@
 import type { JiraForm } from "~/types";
-import { debounce } from "~/utils";
-
-type InputMode = JiraForm.InputMode | null;
+import { debounce, detectInputMode } from "~/utils";
 
 export function setupMutationObserver() {
-  let lastMode: InputMode = null;
+  let lastMode: JiraForm.InputMode | null = null;
 
   const handleMutation = () => {
-    const newMode = detectInputMode();
+    const newMode = detectInputMode("description");
     if (newMode && newMode !== lastMode) {
       console.log("🌀 モードが切り替わりました:", newMode);
       // ここでテンプレ挿入や処理を行える
@@ -21,19 +19,4 @@ export function setupMutationObserver() {
     childList: true,
     subtree: true,
   });
-}
-
-function detectInputMode(): InputMode {
-  const activeForm = document.querySelector("[field-id=description]");
-  if (!activeForm) {
-    return null;
-  }
-  const hasTextarea = activeForm.querySelector("#description");
-  const isWysiwyg = activeForm.querySelector("#description.richeditor-cover");
-
-  if (!hasTextarea) {
-    return null;
-  }
-
-  return isWysiwyg ? "wysiwyg" : "markdown";
 }
