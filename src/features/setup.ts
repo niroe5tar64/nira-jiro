@@ -1,6 +1,6 @@
 import { debounce } from "~/utils";
 
-function setupMutationObserver() {
+export function setupMutationObserver() {
   let lastMode: "markdown" | "wysiwyg" | null = null;
 
   const handleMutation = () => {
@@ -28,6 +28,3 @@ function setupMutationObserver() {
     subtree: true,
   });
 }
-
-// 起動
-setupMutationObserver();

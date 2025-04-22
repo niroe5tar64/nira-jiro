@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
       outDir: "dist",
       rollupOptions: {
         input: {
-          content: path.resolve(__dirname, "src/content.ts"),
+          content: path.resolve(__dirname, "src/index.ts"),
         },
         output: {
           entryFileNames: "content.js",
@@ -30,6 +30,7 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
+        "~/features": path.resolve(__dirname, "./src/features"),
         "~/utils": path.resolve(__dirname, "./src/utils"),
       },
     },

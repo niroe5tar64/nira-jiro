@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "~/features": ["src/features"],
       "~/utils": ["src/utils"]
     },
     "target": "ES2020",
