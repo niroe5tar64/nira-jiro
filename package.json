@@ -1,0 +1,22 @@
+{
+  "name": "nira-jiro",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "format": "biome format . --write",
+    "format:check": "biome format . --skip-errors",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --apply"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/bun": "latest",
+    "vite": "^6.3.2",
+    "vite-plugin-static-copy": "^2.3.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
