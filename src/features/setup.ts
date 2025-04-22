@@ -1,16 +1,19 @@
-import type { JiraForm } from "~/types";
-import { debounce, detectInputMode } from "~/utils";
+import type { InputMode, RichFormType } from "~/utils";
+import { debounce, detectInputMode, getFieldElement } from "~/utils";
 
 export function setupMutationObserver() {
-  let lastMode: JiraForm.InputMode | null = null;
+  const lastModes: Record<RichFormType, InputMode | null> = { description: null, comment: null };
 
   const handleMutation = () => {
-    const newMode = detectInputMode("description");
-    if (newMode && newMode !== lastMode) {
-      console.log("🌀 モードが切り替わりました:", newMode);
-      // ここでテンプレ挿入や処理を行える
-    }
-    lastMode = newMode;
+    const targetRichFormTypes: RichFormType[] = ["description", "comment"];
+    targetRichFormTypes.map((type) => {
+      const formExists = checkRichFormExistence(type);
+      if (formExists) {
+        lastModes[type] = handleModeSwitch(type, lastModes[type]);
+      } else {
+        lastModes[type] = null;
+      }
+    });
   };
 
   const observer = new MutationObserver(debounce(handleMutation, 100)); // 実行間隔は適宜調整
@@ -19,4 +22,27 @@ export function setupMutationObserver() {
     childList: true,
     subtree: true,
   });
+}
+
+function checkRichFormExistence(richFormType: RichFormType) {
+  const field = getFieldElement(richFormType);
+
+  if (!field) {
+    return false;
+  }
+
+  console.log("💡 フォームの存在を検知しました:", richFormType, field);
+  return true;
+}
+
+function handleModeSwitch(
+  richFormType: RichFormType,
+  lastMode: InputMode | null,
+): InputMode | null {
+  const newMode = detectInputMode(richFormType);
+  if (newMode && newMode !== lastMode) {
+    console.log("🌀 モードが切り替わりました:", newMode);
+    // ここでテンプレ挿入や処理を行える
+  }
+  return newMode;
 }

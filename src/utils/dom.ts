@@ -1,6 +1,6 @@
-import type { JiraForm } from "~/types";
-type RichFormType = FieldType;
-type FieldType = "description" | "comment";
+export type RichFormType = FieldType;
+export type FieldType = "description" | "comment";
+export type InputMode = "markdown" | "wysiwyg";
 
 const FIELD_QUERY_SELECTORS: Record<FieldType, string> = {
   description: "[field-id=description]",
@@ -16,7 +16,7 @@ export function getFieldElement(fieldType: FieldType): Element | null {
   return document.querySelector(FIELD_QUERY_SELECTORS[fieldType]);
 }
 
-export function detectInputMode(richFormType: RichFormType): JiraForm.InputMode | null {
+export function detectInputMode(richFormType: RichFormType): InputMode | null {
   const activeForm = getFieldElement(richFormType);
   if (!activeForm) {
     return null;
