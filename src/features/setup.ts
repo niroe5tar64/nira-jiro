@@ -1,7 +1,10 @@
+import type { JiraForm } from "~/types";
 import { debounce } from "~/utils";
 
+type InputMode = JiraForm.InputMode | null;
+
 export function setupMutationObserver() {
-  let lastMode: "markdown" | "wysiwyg" | null = null;
+  let lastMode: InputMode = null;
 
   const handleMutation = () => {
     const activeForm = document.querySelector("[field-id=description]");
@@ -10,7 +13,7 @@ export function setupMutationObserver() {
     const textarea = activeForm.querySelector("#description");
     const wysiwyg = activeForm.querySelector("#description.richeditor-cover");
 
-    let newMode: typeof lastMode = null;
+    let newMode: InputMode = null;
     if (textarea && !wysiwyg) newMode = "markdown";
     if (textarea && wysiwyg) newMode = "wysiwyg";
 

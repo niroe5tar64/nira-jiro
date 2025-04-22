@@ -31,6 +31,7 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "~/features": path.resolve(__dirname, "./src/features"),
+        "~/types": path.resolve(__dirname, "./src/types"),
         "~/utils": path.resolve(__dirname, "./src/utils"),
       },
     },
