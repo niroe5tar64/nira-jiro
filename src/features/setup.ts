@@ -1,11 +1,11 @@
 import type { InputMode, RichFormType } from "~/utils";
-import { debounce, detectInputMode, getFieldElement } from "~/utils";
+import { debounce, detectInputMode, getActiveFormElement } from "~/utils";
 
 export function setupMutationObserver() {
-  const lastModes: Record<RichFormType, InputMode | null> = { description: null, comment: null };
+  const lastModes: Record<RichFormType, InputMode | null> = { description: null, addComment: null };
 
   const handleMutation = () => {
-    const targetRichFormTypes: RichFormType[] = ["description", "comment"];
+    const targetRichFormTypes: RichFormType[] = ["description", "addComment"];
     targetRichFormTypes.map((type) => {
       const formExists = checkRichFormExistence(type);
       if (formExists) {
@@ -25,7 +25,7 @@ export function setupMutationObserver() {
 }
 
 function checkRichFormExistence(richFormType: RichFormType) {
-  const field = getFieldElement(richFormType);
+  const field = getActiveFormElement(richFormType);
 
   if (!field) {
     return false;

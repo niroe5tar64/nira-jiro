@@ -1,27 +1,35 @@
-export type RichFormType = FieldType;
-export type FieldType = "description" | "comment";
+export type RichFormType = "description" | "addComment";
 export type InputMode = "markdown" | "wysiwyg";
 
-const FIELD_QUERY_SELECTORS: Record<FieldType, string> = {
-  description: "[field-id=description]",
-  comment: "[field-id=comment]",
+type FormSection = {
+  activeForm: string;
+  textArea: string;
+  toolbar: string;
 };
 
-const RICH_FORM_QUERY_SELECTORS: Record<RichFormType, string> = {
-  description: "#description",
-  comment: "#comment",
+const QUERY_SELECTORS: Record<RichFormType, FormSection> = {
+  description: {
+    activeForm: "[field-id=description]",
+    textArea: "#description",
+    toolbar: ".wiki-edit-toolbar .aui-toolbar2-inner > .aui-toolbar2-primary",
+  },
+  addComment: {
+    activeForm: "#addcomment.active",
+    textArea: "#comment",
+    toolbar: ".wiki-edit-toolbar .aui-toolbar2-inner > .aui-toolbar2-primary",
+  },
 };
 
-export function getFieldElement(fieldType: FieldType): Element | null {
-  return document.querySelector(FIELD_QUERY_SELECTORS[fieldType]);
+export function getActiveFormElement(richFormType: RichFormType): Element | null {
+  return document.querySelector(QUERY_SELECTORS[richFormType].activeForm);
 }
 
 export function detectInputMode(richFormType: RichFormType): InputMode | null {
-  const activeForm = getFieldElement(richFormType);
+  const activeForm = getActiveFormElement(richFormType);
   if (!activeForm) {
     return null;
   }
-  const textarea = activeForm.querySelector(RICH_FORM_QUERY_SELECTORS[richFormType]);
+  const textarea = activeForm.querySelector(QUERY_SELECTORS[richFormType].textArea);
 
   if (!textarea) {
     return null;
