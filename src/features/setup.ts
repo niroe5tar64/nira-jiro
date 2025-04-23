@@ -1,5 +1,10 @@
 import type { InputMode, RichFormType } from "~/utils";
-import { debounce, detectInputMode, getActiveFormElement } from "~/utils";
+import {
+  debounce,
+  detectInputMode,
+  getActiveFormElement,
+  insertTemplateToolElement,
+} from "~/utils";
 
 export function setupMutationObserver() {
   const lastModes: Record<RichFormType, InputMode | null> = { description: null, addComment: null };
@@ -25,13 +30,14 @@ export function setupMutationObserver() {
 }
 
 function checkRichFormExistence(richFormType: RichFormType) {
-  const field = getActiveFormElement(richFormType);
+  const activeForm = getActiveFormElement(richFormType);
 
-  if (!field) {
+  if (!activeForm) {
     return false;
   }
 
-  console.log("💡 フォームの存在を検知しました:", richFormType, field);
+  console.log("💡 フォームの存在を検知しました:", richFormType, activeForm);
+  insertTemplateToolElement(activeForm, richFormType);
   return true;
 }
 

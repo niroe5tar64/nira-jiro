@@ -1,3 +1,5 @@
+import { createButton } from "~/ui";
+
 export type RichFormType = "description" | "addComment";
 export type InputMode = "markdown" | "wysiwyg";
 
@@ -22,6 +24,21 @@ const QUERY_SELECTORS: Record<RichFormType, FormSection> = {
 
 export function getActiveFormElement(richFormType: RichFormType): Element | null {
   return document.querySelector(QUERY_SELECTORS[richFormType].activeForm);
+}
+
+export function getToolbarElement(activeForm: Element, richFormType: RichFormType): Element | null {
+  return activeForm.querySelector(QUERY_SELECTORS[richFormType].toolbar);
+}
+
+export function insertTemplateToolElement(activeForm: Element, richFormType: RichFormType): void {
+  const toolbar = getToolbarElement(activeForm, richFormType);
+
+  // 既にテンプレートツールが存在するなら処理をスキップ
+  if (!toolbar || toolbar.children.namedItem("template-tool")) {
+    return;
+  }
+  const templateTool = createButton();
+  toolbar.appendChild(templateTool);
 }
 
 export function detectInputMode(richFormType: RichFormType): InputMode | null {
