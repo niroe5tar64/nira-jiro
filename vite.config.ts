@@ -28,11 +28,15 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true,
       target: "es2020",
     },
+    compilerOptions: {
+      jsx: "react-jsx",
+      jsxImportSource: "preact",
+    },
     resolve: {
       alias: {
+        "~/components": path.resolve(__dirname, "./src/components"),
         "~/features": path.resolve(__dirname, "./src/features"),
         "~/types": path.resolve(__dirname, "./src/types"),
-        "~/ui": path.resolve(__dirname, "./src/ui"),
         "~/utils": path.resolve(__dirname, "./src/utils"),
       },
     },

@@ -1,4 +1,5 @@
-import { createButton } from "~/ui";
+import { TemplateTool } from "~/components";
+import { mountComponent } from "~/utils";
 
 export type RichFormType = "description" | "addComment";
 export type InputMode = "markdown" | "wysiwyg";
@@ -32,13 +33,9 @@ export function getToolbarElement(activeForm: Element, richFormType: RichFormTyp
 
 export function insertTemplateToolElement(activeForm: Element, richFormType: RichFormType): void {
   const toolbar = getToolbarElement(activeForm, richFormType);
-
-  // 既にテンプレートツールが存在するなら処理をスキップ
-  if (!toolbar || toolbar.children.namedItem("template-tool")) {
-    return;
-  }
-  const templateTool = createButton();
-  toolbar.appendChild(templateTool);
+  const container = document.createElement("div");
+  container.className = "aui-buttons";
+  mountComponent(TemplateTool, toolbar, container);
 }
 
 export function detectInputMode(richFormType: RichFormType): InputMode | null {
