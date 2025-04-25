@@ -26,5 +26,11 @@
     "formatter": {
       "quoteStyle": "double"
     }
+  },
+  "css": {
+    "formatter": {
+      "indentStyle": "space",
+      "lineWidth": 200
+    }
   }
 }

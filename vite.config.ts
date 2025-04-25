@@ -23,6 +23,7 @@ export default defineConfig(({ mode }) => {
         },
         output: {
           entryFileNames: "content.js",
+          assetFileNames: "content.css",
         },
       },
       emptyOutDir: true,
