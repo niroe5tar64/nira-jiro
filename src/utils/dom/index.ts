@@ -33,9 +33,7 @@ export function getToolbarElement(activeForm: Element, richFormType: RichFormTyp
 
 export function insertTemplateToolElement(activeForm: Element, richFormType: RichFormType): void {
   const toolbar = getToolbarElement(activeForm, richFormType);
-  const container = document.createElement("div");
-  container.className = "aui-buttons";
-  mountComponent(TemplateTool, toolbar, container);
+  mountComponent(TemplateTool, toolbar);
 }
 
 export function detectInputMode(richFormType: RichFormType): InputMode | null {

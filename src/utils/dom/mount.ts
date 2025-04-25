@@ -5,7 +5,7 @@ import { render, h } from "preact";
  */
 export function mountComponent(
   Component: preact.FunctionComponent,
-  target: Element | null,
+  target?: Element | null,
   container: Element | null = null,
   forceMount = false,
 ) {
