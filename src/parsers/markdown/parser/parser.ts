@@ -7,7 +7,7 @@ import {
   MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
-} from "./nodes";
+} from "../ast/nodes";
 
 import {
   type MarkdownToken,
@@ -19,7 +19,7 @@ import {
   CodeBlockEndToken,
   BlockquoteToken,
   BlankLineToken,
-} from "./tokens";
+} from "../tokens";
 
 /**
  * Markdownのトークン列からASTを組み立てるパーサー

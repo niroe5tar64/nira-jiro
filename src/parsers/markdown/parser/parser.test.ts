@@ -9,7 +9,7 @@ import {
   CodeBlockEndToken,
   BlockquoteToken,
   BlankLineToken,
-} from "./tokens";
+} from "../tokens";
 import {
   MarkdownHeadingNode,
   MarkdownParagraphNode,
@@ -18,7 +18,7 @@ import {
   MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
-} from "./nodes";
+} from "../ast/nodes";
 
 describe("MarkdownASTBuilder", () => {
   it("should build an AST for headings", () => {
