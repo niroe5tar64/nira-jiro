@@ -1,5 +1,5 @@
 import { describe, it, expect } from "bun:test";
-import { MarkdownASTBuilder } from "./parser";
+import { StandardParser } from "./parser";
 
 import {
   MarkdownHeadingNode,
@@ -21,10 +21,10 @@ import {
   BlankLineToken,
 } from "../../common/tokens";
 
-describe("MarkdownASTBuilder", () => {
+describe("StandardParser", () => {
   it("should build an AST for headings", () => {
     const tokens = [new HeadingToken(1, "Heading 1"), new HeadingToken(2, "Heading 2")];
-    const builder = new MarkdownASTBuilder(tokens);
+    const builder = new StandardParser(tokens);
     const ast = builder.build();
 
     expect(ast).toEqual([
@@ -38,7 +38,7 @@ describe("MarkdownASTBuilder", () => {
       new ParagraphToken("This is a paragraph."),
       new ParagraphToken("Another paragraph."),
     ];
-    const builder = new MarkdownASTBuilder(tokens);
+    const builder = new StandardParser(tokens);
     const ast = builder.build();
 
     expect(ast).toEqual([
@@ -53,7 +53,7 @@ describe("MarkdownASTBuilder", () => {
       new CodeBlockContentToken("console.log('Hello, world!');"),
       new CodeBlockEndToken(),
     ];
-    const builder = new MarkdownASTBuilder(tokens);
+    const builder = new StandardParser(tokens);
     const ast = builder.build();
 
     expect(ast).toEqual([new MarkdownCodeBlockNode(null, "console.log('Hello, world!');")]);
@@ -64,7 +64,7 @@ describe("MarkdownASTBuilder", () => {
       new BlockquoteToken("This is a blockquote."),
       new BlockquoteToken("Another blockquote."),
     ];
-    const builder = new MarkdownASTBuilder(tokens);
+    const builder = new StandardParser(tokens);
     const ast = builder.build();
 
     expect(ast).toEqual([
@@ -77,7 +77,7 @@ describe("MarkdownASTBuilder", () => {
 
   it("should build an AST for lists", () => {
     const tokens = [new ListItemToken(false, 0, "Item 1"), new ListItemToken(false, 0, "Item 2")];
-    const builder = new MarkdownASTBuilder(tokens);
+    const builder = new StandardParser(tokens);
     const ast = builder.build();
 
     expect(ast).toEqual([
@@ -96,7 +96,7 @@ describe("MarkdownASTBuilder", () => {
       new CodeBlockContentToken("console.log('Hello');"),
       new CodeBlockEndToken(),
     ];
-    const builder = new MarkdownASTBuilder(tokens);
+    const builder = new StandardParser(tokens);
     const ast = builder.build();
 
     expect(ast).toEqual([
@@ -112,7 +112,7 @@ describe("MarkdownASTBuilder", () => {
       new BlankLineToken(),
       new ParagraphToken("Another paragraph."),
     ];
-    const builder = new MarkdownASTBuilder(tokens);
+    const builder = new StandardParser(tokens);
     const ast = builder.build();
 
     expect(ast).toEqual([

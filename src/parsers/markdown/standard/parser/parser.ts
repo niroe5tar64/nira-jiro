@@ -24,7 +24,7 @@ import {
 /**
  * Markdownのトークン列からASTを組み立てるパーサー
  */
-export class MarkdownASTBuilder {
+export class StandardParser {
   private nodes: MarkdownBlockNode[] = [];
 
   constructor(private tokens: MarkdownToken[]) {}
