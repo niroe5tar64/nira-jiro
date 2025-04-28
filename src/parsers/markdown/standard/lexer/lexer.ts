@@ -10,69 +10,81 @@ import {
   BlankLineToken,
 } from "../../common/tokens";
 
-/**
- * Markdownテキストをトークン列に分割する
- */
-export function tokenizeMarkdown(source: string): MarkdownToken[] {
-  const lines = source.split(/\r?\n/);
+export class StandardLexer {
+  private lines: string[];
+  private insideCodeBlock = false;
 
-  if (lines.every((line) => line.trim() === "")) {
-    lines.pop(); // 全て空行の場合の考慮（空行が余分に出力される）
+  constructor(private source: string) {
+    this.lines = source.split(/\r?\n/);
   }
-  const tokens: MarkdownToken[] = [];
-  let insideCodeBlock = false;
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
+  tokenize(): MarkdownToken[] {
+    const tokens: MarkdownToken[] = [];
 
-    if (insideCodeBlock) {
-      if (line.startsWith("```")) {
-        tokens.push(new CodeBlockEndToken());
-        insideCodeBlock = false;
-      } else {
-        tokens.push(new CodeBlockContentToken(line));
+    // 空行のみのケース考慮（無駄な空行を除去）
+    if (this.lines.every((line) => line.trim() === "")) {
+      this.lines.pop();
+    }
+
+    for (const line of this.lines) {
+      const trimmed = line.trim();
+
+      // inside code block
+      if (this.insideCodeBlock) {
+        if (trimmed.startsWith("```")) {
+          tokens.push(new CodeBlockEndToken());
+          this.insideCodeBlock = false;
+        } else {
+          tokens.push(new CodeBlockContentToken(line));
+        }
+        continue;
       }
-      continue;
+
+      // empty line
+      if (trimmed === "") {
+        tokens.push(new BlankLineToken());
+        continue;
+      }
+
+      // code block start
+      if (trimmed.startsWith("```")) {
+        const language = trimmed.slice(3).trim() || null;
+        tokens.push(new CodeBlockStartToken(language));
+        this.insideCodeBlock = true;
+        continue;
+      }
+
+      // heading (#, ##, ###...)
+      const headingMatch = trimmed.match(/^(#{1,6})\s+(.*)$/);
+      if (headingMatch) {
+        tokens.push(new HeadingToken(headingMatch[1].length, headingMatch[2]));
+        continue;
+      }
+
+      // blockquote (>)
+      const blockquoteMatch = trimmed.match(/^>\s?(.*)$/);
+      if (blockquoteMatch) {
+        tokens.push(new BlockquoteToken(blockquoteMatch[1]));
+        continue;
+      }
+
+      // list item (-, *, +, 1.)
+      const listMatch = line.match(/^(\s*)([-*+]|\d+\.)\s+(.*)$/);
+      if (listMatch) {
+        const spaces = listMatch[1].length;
+        const marker = listMatch[2];
+        const content = listMatch[3];
+
+        const ordered = /^\d+\./.test(marker);
+        const level = Math.floor(spaces / 2) + 1;
+        tokens.push(new ListItemToken(ordered, level, content));
+        continue;
+      }
+
+      // default: paragraph
+      tokens.push(new ParagraphToken(trimmed));
     }
 
-    if (line.trim() === "") {
-      tokens.push(new BlankLineToken());
-      continue;
-    }
-
-    if (line.startsWith("```")) {
-      const language = line.slice(3).trim() || null;
-      tokens.push(new CodeBlockStartToken(language));
-      insideCodeBlock = true;
-      continue;
-    }
-
-    const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
-    if (headingMatch) {
-      tokens.push(new HeadingToken(headingMatch[1].length, headingMatch[2]));
-      continue;
-    }
-
-    const blockquoteMatch = line.match(/^>\s?(.*)/);
-    if (blockquoteMatch) {
-      tokens.push(new BlockquoteToken(blockquoteMatch[1]));
-      continue;
-    }
-
-    const listMatch = line.match(/^(\s*)([-*+]|\d+\.)\s+(.*)/);
-    if (listMatch) {
-      const spaces = listMatch[1].length;
-      const marker = listMatch[2];
-      const content = listMatch[3];
-
-      const ordered = /^\d+\./.test(marker);
-      const level = Math.floor(spaces / 2) + 1;
-      tokens.push(new ListItemToken(ordered, level, content));
-      continue;
-    }
-
-    tokens.push(new ParagraphToken(line.trim()));
+    return tokens;
   }
-
-  return tokens;
 }
