@@ -114,27 +114,60 @@ export class StandardParser {
   }
 
   private buildList(startIndex: number): [MarkdownListNode, number] {
-    const items: MarkdownListItemNode[] = [];
+    const rootItems: MarkdownListItemNode[] = [];
+    const stack: { list: MarkdownListNode; level: number }[] = [];
     const firstToken = this.tokens[startIndex];
     if (!(firstToken instanceof ListItemToken)) {
       throw new Error("Expected ListItemToken");
     }
+
     const ordered = firstToken.ordered;
+    const currentList = new MarkdownListNode(ordered, rootItems);
+
+    stack.push({ list: currentList, level: firstToken.level });
 
     let i = startIndex;
     while (i < this.tokens.length) {
       const token = this.tokens[i];
+
       if (!(token instanceof ListItemToken) || token.ordered !== ordered) {
         break;
       }
 
-      items.push(
-        new MarkdownListItemNode([this.buildParagraph(new ParagraphToken(token.content))]),
-      );
+      const listItem = new MarkdownListItemNode([
+        new MarkdownParagraphNode([new MarkdownTextNode(token.content)]),
+      ]);
 
+      const currentLevel = stack[stack.length - 1].level;
+
+      if (token.level > currentLevel) {
+        // レベルアップ（子リスト作成）
+        const subList = new MarkdownListNode(ordered, [listItem]);
+        const parentItem = stack[stack.length - 1].list.items.at(-1);
+        if (parentItem) {
+          parentItem.children.push(subList);
+        }
+        stack.push({ list: subList, level: token.level });
+      } else if (token.level < currentLevel) {
+        // レベルダウン（親リストに戻る）
+        while (stack.length > 0 && stack[stack.length - 1].level > token.level) {
+          stack.pop();
+        }
+
+        if (stack.length === 0) {
+          // スタックが空ならroot直下に
+          rootItems.push(listItem);
+        } else {
+          // 通常通り親リストに追加
+          stack[stack.length - 1].list.items.push(listItem);
+        }
+      } else {
+        // 同じレベルなら同じリストに追加
+        stack[stack.length - 1].list.items.push(listItem);
+      }
       i++;
     }
 
-    return [new MarkdownListNode(ordered, items), i];
+    return [currentList, i];
   }
 }

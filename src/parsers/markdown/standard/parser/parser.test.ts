@@ -120,4 +120,66 @@ describe("StandardParser", () => {
       new MarkdownParagraphNode([new MarkdownTextNode("Another paragraph.")]),
     ]);
   });
+
+  it("should build nested list AST correctly", () => {
+    const tokens = [
+      new ListItemToken(false, 1, "Item 1"), // レベル1 (indent 0)
+      new ListItemToken(false, 2, "Subitem 1"), // レベル2 (indent 2)
+      new ListItemToken(false, 2, "Subitem 2"), // レベル2 (indent 2)
+      new ListItemToken(false, 1, "Item 2"), // レベル1 (indent 0)
+    ];
+    const parser = new StandardParser(tokens);
+    const ast = parser.build();
+
+    expect(ast).toEqual([
+      new MarkdownListNode(false, [
+        new MarkdownListItemNode([
+          new MarkdownParagraphNode([new MarkdownTextNode("Item 1")]),
+          new MarkdownListNode(false, [
+            new MarkdownListItemNode([
+              new MarkdownParagraphNode([new MarkdownTextNode("Subitem 1")]),
+            ]),
+            new MarkdownListItemNode([
+              new MarkdownParagraphNode([new MarkdownTextNode("Subitem 2")]),
+            ]),
+          ]),
+        ]),
+        new MarkdownListItemNode([new MarkdownParagraphNode([new MarkdownTextNode("Item 2")])]),
+      ]),
+    ]);
+  });
+
+  it("should build deeply nested list AST correctly", () => {
+    const tokens = [
+      new ListItemToken(false, 1, "Item 1"), // レベル1 (indent 0)
+      new ListItemToken(false, 2, "Subitem 1"), // レベル2 (indent 2)
+      new ListItemToken(false, 3, "Subsubitem 1"), // レベル3 (indent 4)
+      new ListItemToken(false, 2, "Subitem 2"), // レベル2 (indent 2)
+      new ListItemToken(false, 1, "Item 2"), // レベル1 (indent 0)
+    ];
+    const parser = new StandardParser(tokens);
+    const ast = parser.build();
+
+    expect(ast).toEqual([
+      new MarkdownListNode(false, [
+        new MarkdownListItemNode([
+          new MarkdownParagraphNode([new MarkdownTextNode("Item 1")]),
+          new MarkdownListNode(false, [
+            new MarkdownListItemNode([
+              new MarkdownParagraphNode([new MarkdownTextNode("Subitem 1")]),
+              new MarkdownListNode(false, [
+                new MarkdownListItemNode([
+                  new MarkdownParagraphNode([new MarkdownTextNode("Subsubitem 1")]),
+                ]),
+              ]),
+            ]),
+            new MarkdownListItemNode([
+              new MarkdownParagraphNode([new MarkdownTextNode("Subitem 2")]),
+            ]),
+          ]),
+        ]),
+        new MarkdownListItemNode([new MarkdownParagraphNode([new MarkdownTextNode("Item 2")])]),
+      ]),
+    ]);
+  });
 });
