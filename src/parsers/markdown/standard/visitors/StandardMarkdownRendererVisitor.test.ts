@@ -1,5 +1,5 @@
 import { describe, it, expect } from "bun:test";
-import { MarkdownRendererVisitor } from ".";
+import { StandardMarkdownRendererVisitor } from ".";
 import {
   MarkdownHeadingNode,
   MarkdownParagraphNode,
@@ -10,8 +10,8 @@ import {
   MarkdownTextNode,
 } from "../../common/ast/nodes";
 
-describe("MarkdownRendererVisitor", () => {
-  const visitor = new MarkdownRendererVisitor();
+describe("StandardMarkdownRendererVisitor", () => {
+  const visitor = new StandardMarkdownRendererVisitor();
 
   it("should render a heading", () => {
     const node = new MarkdownHeadingNode(2, [new MarkdownTextNode("Heading 2")]);

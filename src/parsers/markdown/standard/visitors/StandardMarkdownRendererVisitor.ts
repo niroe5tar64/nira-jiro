@@ -9,7 +9,7 @@ import type {
   MarkdownTextNode,
 } from "../../common/ast/nodes";
 
-export class MarkdownRendererVisitor extends AbstractMarkdownNodeVisitor<string> {
+export class StandardMarkdownRendererVisitor extends AbstractMarkdownNodeVisitor<string> {
   visitHeading(node: MarkdownHeadingNode): string {
     const content = node.children.map((child) => child.accept(this)).join("");
     const prefix = "#".repeat(node.level);

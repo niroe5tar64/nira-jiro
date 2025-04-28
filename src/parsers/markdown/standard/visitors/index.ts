@@ -1,1 +1,1 @@
-export * from "./MarkdownRendererVisitor";
+export * from "./StandardMarkdownRendererVisitor";
