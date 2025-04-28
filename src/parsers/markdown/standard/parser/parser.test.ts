@@ -1,5 +1,6 @@
 import { describe, it, expect } from "bun:test";
 import { MarkdownASTBuilder } from "./parser";
+
 import {
   HeadingToken,
   ParagraphToken,
@@ -9,7 +10,7 @@ import {
   CodeBlockEndToken,
   BlockquoteToken,
   BlankLineToken,
-} from "../tokens";
+} from "../../common/tokens";
 import {
   MarkdownHeadingNode,
   MarkdownParagraphNode,
@@ -18,7 +19,7 @@ import {
   MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
-} from "../ast/nodes";
+} from "../../common/ast/nodes";
 
 describe("MarkdownASTBuilder", () => {
   it("should build an AST for headings", () => {

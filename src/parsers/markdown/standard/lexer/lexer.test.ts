@@ -9,7 +9,7 @@ import {
   CodeBlockEndToken,
   BlockquoteToken,
   BlankLineToken,
-} from "../tokens";
+} from "../../common/tokens";
 
 describe("tokenizeMarkdown", () => {
   it("should tokenize blank lines", () => {

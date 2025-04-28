@@ -8,7 +8,7 @@ import {
   MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
-} from "../nodes";
+} from "../../common/ast/nodes";
 
 describe("MarkdownRendererVisitor", () => {
   const visitor = new MarkdownRendererVisitor();

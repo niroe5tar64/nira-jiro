@@ -8,7 +8,7 @@ import {
   CodeBlockEndToken,
   BlockquoteToken,
   BlankLineToken,
-} from "../tokens";
+} from "../../common/tokens";
 
 /**
  * Markdownテキストをトークン列に分割する

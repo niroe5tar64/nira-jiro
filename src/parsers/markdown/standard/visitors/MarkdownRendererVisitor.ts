@@ -1,4 +1,4 @@
-import { AbstractMarkdownNodeVisitor } from ".";
+import { AbstractMarkdownNodeVisitor } from "../../common/ast/visitors/AbstractMarkdownNodeVisitor";
 import type {
   MarkdownHeadingNode,
   MarkdownParagraphNode,
@@ -7,7 +7,7 @@ import type {
   MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
-} from "../nodes";
+} from "../../common/ast/nodes";
 
 export class MarkdownRendererVisitor extends AbstractMarkdownNodeVisitor<string> {
   private ordered = false;
