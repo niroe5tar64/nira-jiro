@@ -1,4 +1,4 @@
-import type { AbstractMarkdownNodeVisitor } from "../render-visitors";
+import type { AbstractMarkdownNodeVisitor } from "../visitors";
 import { MarkdownInlineNode } from ".";
 
 export class MarkdownTextNode extends MarkdownInlineNode {
@@ -6,7 +6,7 @@ export class MarkdownTextNode extends MarkdownInlineNode {
     super();
   }
 
-  accept(visitor: AbstractMarkdownNodeVisitor): string {
+  accept<T>(visitor: AbstractMarkdownNodeVisitor<T>): T {
     return visitor.visitText(this);
   }
 }

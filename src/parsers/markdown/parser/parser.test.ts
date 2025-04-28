@@ -58,7 +58,7 @@ describe("MarkdownASTBuilder", () => {
     expect(ast).toEqual([new MarkdownCodeBlockNode(null, "console.log('Hello, world!');")]);
   });
 
-  it("should build an AST for blockquotes", () => {
+  it("should build an AST for block quotes", () => {
     const tokens = [
       new BlockquoteToken("This is a blockquote."),
       new BlockquoteToken("Another blockquote."),

@@ -7,10 +7,12 @@ import type {
   MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
-  ListItemContext,
 } from "../nodes";
 
-export class MarkdownRendererVisitor extends AbstractMarkdownNodeVisitor {
+export class MarkdownRendererVisitor extends AbstractMarkdownNodeVisitor<string> {
+  private ordered = false;
+  private index = 1;
+
   visitHeading(node: MarkdownHeadingNode): string {
     const content = node.children.map((child) => child.accept(this)).join("");
     const prefix = "#".repeat(node.level);
@@ -46,18 +48,20 @@ export class MarkdownRendererVisitor extends AbstractMarkdownNodeVisitor {
   }
 
   visitList(node: MarkdownListNode): string {
-    return `${node.items
-      .map((item, index) => {
-        const order = node.ordered ? index + 1 : undefined;
-        return item.accept(this, { order });
-      })
-      .join("\n")}\n`;
+    const ordered = node.ordered;
+    let index = 1;
+
+    const items = node.items.map((item) => {
+      const prefix = ordered ? `${index++}. ` : "- ";
+      const content = item.accept(this);
+      return prefix + content;
+    });
+
+    return `${items.join("\n")}\n`;
   }
 
-  visitListItem(node: MarkdownListItemNode, context: ListItemContext): string {
-    const content = node.children.map((child) => child.accept(this)).join("");
-    const prefix = context.order !== undefined ? `${context.order}. ` : "- ";
-    return `${prefix}${content}`;
+  visitListItem(node: MarkdownListItemNode): string {
+    return node.children.map((child) => child.accept(this)).join("");
   }
 
   visitText(node: MarkdownTextNode): string {

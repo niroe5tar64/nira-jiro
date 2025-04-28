@@ -59,14 +59,14 @@ describe("MarkdownRendererVisitor", () => {
 
   it("should render a list item with order", () => {
     const node = new MarkdownListItemNode([new MarkdownTextNode("Ordered item")]);
-    const result = visitor.visitListItem(node, { order: 1 });
-    expect(result).toBe("1. Ordered item");
+    const result = visitor.visitListItem(node);
+    expect(result).toBe("Ordered item");
   });
 
   it("should render a list item without order", () => {
     const node = new MarkdownListItemNode([new MarkdownTextNode("Unordered item")]);
-    const result = visitor.visitListItem(node, {});
-    expect(result).toBe("- Unordered item");
+    const result = visitor.visitListItem(node);
+    expect(result).toBe("Unordered item");
   });
 
   it("should render plain text", () => {

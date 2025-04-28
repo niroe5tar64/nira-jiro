@@ -1,13 +1,13 @@
-import type { AbstractMarkdownNodeVisitor } from "../render-visitors";
+import type { AbstractMarkdownNodeVisitor } from "../visitors";
 
-import { type ListItemContext, MarkdownBlockNode } from ".";
+import { MarkdownBlockNode } from ".";
 
 export class MarkdownListItemNode extends MarkdownBlockNode {
   constructor(public children: MarkdownBlockNode[]) {
     super();
   }
 
-  accept(visitor: AbstractMarkdownNodeVisitor, context: ListItemContext): string {
-    return visitor.visitListItem(this, context);
+  accept<T>(visitor: AbstractMarkdownNodeVisitor<T>): T {
+    return visitor.visitListItem(this);
   }
 }

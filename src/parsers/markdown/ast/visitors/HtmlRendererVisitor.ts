@@ -9,7 +9,7 @@ import type {
   MarkdownTextNode,
 } from "../nodes";
 
-export class HtmlRendererVisitor extends AbstractMarkdownNodeVisitor {
+export class HtmlRendererVisitor extends AbstractMarkdownNodeVisitor<string> {
   visitHeading(node: MarkdownHeadingNode): string {
     const content = node.children.map((child) => child.accept(this)).join("");
     return `<h${node.level}>${content}</h${node.level}>`;
@@ -32,9 +32,7 @@ export class HtmlRendererVisitor extends AbstractMarkdownNodeVisitor {
 
   visitList(node: MarkdownListNode): string {
     const tag = node.ordered ? "ol" : "ul";
-    const items = node.items
-      .map((item, index) => item.accept(this, { order: node.ordered ? index + 1 : undefined }))
-      .join("\n");
+    const items = node.items.map((item) => item.accept(this)).join("\n");
     return `<${tag}>\n${items}\n</${tag}>`;
   }
 

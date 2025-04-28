@@ -1,4 +1,3 @@
-export * from "./node-context";
 export * from "./MarkdownNode";
 export * from "./MarkdownHeadingNode";
 export * from "./MarkdownParagraphNode";

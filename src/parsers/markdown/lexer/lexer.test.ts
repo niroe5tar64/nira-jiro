@@ -60,7 +60,7 @@ describe("tokenizeMarkdown", () => {
     ]);
   });
 
-  it("should tokenize blockquotes", () => {
+  it("should tokenize block quotes", () => {
     const source = "> This is a blockquote.";
     const tokens = tokenizeMarkdown(source);
     expect(tokens).toEqual([new BlockquoteToken("This is a blockquote.")]);

@@ -1,8 +1,7 @@
-import type { AbstractMarkdownNodeVisitor } from "../render-visitors";
-import type { NodeContext } from ".";
+import type { AbstractMarkdownNodeVisitor } from "../visitors";
 
 export abstract class MarkdownNode {
-  abstract accept(visitor: AbstractMarkdownNodeVisitor, context?: NodeContext): string;
+  abstract accept<T>(visitor: AbstractMarkdownNodeVisitor<T>): T;
 }
 
 export abstract class MarkdownBlockNode extends MarkdownNode {}
