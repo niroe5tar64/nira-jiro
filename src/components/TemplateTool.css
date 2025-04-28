@@ -1,16 +1,16 @@
-.wiki-edit-toolbar div.aui-buttons[name="template-tool"] .wiki-edit-operation-template {
+.wiki-edit-toolbar div.aui-buttons.template-tool .wiki-edit-operation-template {
   width: 68px;
   margin-right: -68px;
   padding: 4px 2px;
   z-index: 1;
 }
-.wiki-edit-toolbar div.aui-buttons[name="template-tool"] .aui-button.wiki-edit-operation-template:focus {
+.wiki-edit-toolbar div.aui-buttons.template-tool .aui-button.wiki-edit-operation-template:focus {
   background-color: unset;
 }
-.wiki-edit-toolbar div.aui-buttons[name="template-tool"] .aui-button.wiki-edit-operation-template:hover {
+.wiki-edit-toolbar div.aui-buttons.template-tool .aui-button.wiki-edit-operation-template:hover {
   background-color: var(--aui-btn-bg);
 }
-.wiki-edit-toolbar div.aui-buttons[name="template-tool"] .aui-button.wiki-edit-template-trigger {
+.wiki-edit-toolbar div.aui-buttons.template-tool .aui-button.wiki-edit-template-trigger {
   vertical-align: top;
   padding-right: 14px !important;
   padding-left: 68px;

@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from "vite";
+import solidPlugin from "vite-plugin-solid";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import fs from "node:fs";
 import path from "node:path";
@@ -27,11 +28,8 @@ export default defineConfig(({ mode }) => {
         },
       },
       emptyOutDir: true,
-      target: "es2020",
-    },
-    compilerOptions: {
-      jsx: "react-jsx",
-      jsxImportSource: "preact",
+      target: "esnext",
+      polyfillDynamicImport: false,
     },
     resolve: {
       alias: {
@@ -42,6 +40,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
+      solidPlugin(),
       viteStaticCopy({
         targets: [
           { src: "public/manifest.json", dest: "." },
