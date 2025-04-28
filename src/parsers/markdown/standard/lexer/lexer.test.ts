@@ -70,9 +70,9 @@ describe("tokenizeMarkdown", () => {
     const source = "- Item 1\n  - Subitem 1\n* Item 2";
     const tokens = tokenizeMarkdown(source);
     expect(tokens).toEqual([
-      new ListItemToken(false, 0, "Item 1"),
+      new ListItemToken(false, 1, "Item 1"),
       new ListItemToken(false, 2, "Subitem 1"),
-      new ListItemToken(false, 0, "Item 2"),
+      new ListItemToken(false, 1, "Item 2"),
     ]);
   });
 
@@ -80,8 +80,8 @@ describe("tokenizeMarkdown", () => {
     const source = "1. First item\n2. Second item";
     const tokens = tokenizeMarkdown(source);
     expect(tokens).toEqual([
-      new ListItemToken(true, 0, "First item"),
-      new ListItemToken(true, 0, "Second item"),
+      new ListItemToken(true, 1, "First item"),
+      new ListItemToken(true, 1, "Second item"),
     ]);
   });
 });

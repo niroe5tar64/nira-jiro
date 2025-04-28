@@ -61,9 +61,13 @@ export function tokenizeMarkdown(source: string): MarkdownToken[] {
 
     const listMatch = line.match(/^(\s*)([-*+]|\d+\.)\s+(.*)/);
     if (listMatch) {
-      const indent = listMatch[1].length;
-      const ordered = /^\d+\./.test(listMatch[2]);
-      tokens.push(new ListItemToken(ordered, indent, listMatch[3]));
+      const spaces = listMatch[1].length;
+      const marker = listMatch[2];
+      const content = listMatch[3];
+
+      const ordered = /^\d+\./.test(marker);
+      const level = Math.floor(spaces / 2) + 1;
+      tokens.push(new ListItemToken(ordered, level, content));
       continue;
     }
 

@@ -5,7 +5,7 @@ export class ListItemToken extends MarkdownToken {
 
   constructor(
     public ordered: boolean,
-    public indent: number,
+    public level: number,
     public content: string,
   ) {
     super();
