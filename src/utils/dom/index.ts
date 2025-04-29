@@ -31,11 +31,6 @@ export function getToolbarElement(activeForm: Element, richFormType: RichFormTyp
   return activeForm.querySelector(QUERY_SELECTORS[richFormType].toolbar);
 }
 
-export function insertTemplateToolElement(activeForm: Element, richFormType: RichFormType): void {
-  const toolbar = getToolbarElement(activeForm, richFormType);
-  mountComponent(TemplateTool, toolbar);
-}
-
 export function detectInputMode(richFormType: RichFormType): InputMode | null {
   const activeForm = getActiveFormElement(richFormType);
   if (!activeForm) {

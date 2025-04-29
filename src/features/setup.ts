@@ -1,5 +1,5 @@
-import { observeRichFormChanges } from "~/dom";
-import { getActiveFormElement, detectInputMode, insertTemplateToolElement } from "~/utils";
+import { observeRichFormChanges, mountTemplateTool } from "~/dom";
+import { getActiveFormElement, detectInputMode } from "~/utils";
 import type { InputMode, RichFormType } from "~/utils";
 
 export function setupMutationObserver() {
@@ -26,7 +26,7 @@ function checkRichFormExistence(richFormType: RichFormType) {
   }
 
   console.log("💡 フォームの存在を検知しました:", richFormType, activeForm);
-  insertTemplateToolElement(activeForm, richFormType);
+  mountTemplateTool(activeForm, richFormType);
   return true;
 }
 
