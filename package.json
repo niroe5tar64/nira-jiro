@@ -4,6 +4,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/bun": "latest",
+    "@types/chrome": "^0.0.317",
     "vite": "^6.3.2",
     "vite-plugin-solid": "^2.11.6",
     "vite-plugin-static-copy": "^2.3.1"
