@@ -20,8 +20,8 @@ export default defineConfig(({ mode }) => {
       outDir: "dist",
       rollupOptions: {
         input: {
-          content: path.resolve(__dirname, "src/index.ts"),
-          popup: path.resolve(__dirname, "src/popup/main.ts"),
+          content: path.resolve(__dirname, "src/extension/content.ts"),
+          popup: path.resolve(__dirname, "src/extension/popup.ts"),
         },
         output: {
           entryFileNames: (chunkInfo) => {
