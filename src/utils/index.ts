@@ -1,2 +1,2 @@
 export * from "./debounce";
-export * from "./dom/mount";
+export * from "./mount";
