@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "paths": {
       "~/components": ["src/components"],
+      "~/dom": ["src/dom"],
       "~/features": ["src/features"],
       "~/types": ["src/types"],
       "~/utils": ["src/utils"]

@@ -1,15 +1,11 @@
+import { observeRichFormChanges } from "~/dom";
+import { getActiveFormElement, detectInputMode, insertTemplateToolElement } from "~/utils";
 import type { InputMode, RichFormType } from "~/utils";
-import {
-  debounce,
-  detectInputMode,
-  getActiveFormElement,
-  insertTemplateToolElement,
-} from "~/utils";
 
 export function setupMutationObserver() {
   const lastModes: Record<RichFormType, InputMode | null> = { description: null, addComment: null };
 
-  const handleMutation = () => {
+  observeRichFormChanges(() => {
     const targetRichFormTypes: RichFormType[] = ["description", "addComment"];
     targetRichFormTypes.map((type) => {
       const formExists = checkRichFormExistence(type);
@@ -19,13 +15,6 @@ export function setupMutationObserver() {
         lastModes[type] = null;
       }
     });
-  };
-
-  const observer = new MutationObserver(debounce(handleMutation, 100)); // 実行間隔は適宜調整
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
   });
 }
 
