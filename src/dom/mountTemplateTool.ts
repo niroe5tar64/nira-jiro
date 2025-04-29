@@ -1,5 +1,6 @@
 import { TemplateTool } from "~/components";
-import { type RichFormType, mountComponent, getToolbarElement } from "~/utils";
+import { type RichFormType, getToolbarElement } from "~/dom";
+import { mountComponent } from "~/utils";
 
 /**
  * 指定したリッチフォームタイプのツールバーに TemplateTool をマウントする

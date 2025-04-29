@@ -1,6 +1,3 @@
-import { TemplateTool } from "~/components";
-import { mountComponent } from "~/utils";
-
 export type RichFormType = "description" | "addComment";
 export type InputMode = "markdown" | "wysiwyg";
 
