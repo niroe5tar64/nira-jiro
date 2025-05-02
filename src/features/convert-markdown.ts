@@ -16,6 +16,13 @@ interface ConvertMarkdownArgs {
   to: MarkdownFlavor;
 }
 
+export function convertMarkdown(args: ConvertMarkdownArgs) {
+  const { source, from, to } = args;
+
+  const astNodes = parsers[from](source);
+  return renderers[to](astNodes);
+}
+
 const parsers: Record<MarkdownFlavor, (source: string) => MarkdownBlockNode[]> = {
   standard: parseStandardMarkdown,
   jira: parseJiraMarkdown,
@@ -26,10 +33,3 @@ const renderers: Record<DocumentFormat, (astNodes: MarkdownBlockNode[]) => strin
   jira: renderJiraMarkdown,
   html: renderHtml,
 };
-
-export function convertMarkdown(args: ConvertMarkdownArgs) {
-  const { source, from, to } = args;
-
-  const astNodes = parsers[from](source);
-  return renderers[to](astNodes);
-}
