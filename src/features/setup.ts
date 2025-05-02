@@ -1,9 +1,4 @@
-import {
-  getActiveFormElement,
-  detectInputMode,
-  observeRichFormChanges,
-  mountTemplateTool,
-} from "~/dom";
+import { checkRichFormExistence, detectInputMode, observeRichFormChanges } from "~/dom";
 import type { InputMode, RichFormType } from "~/dom";
 
 export function setupMutationObserver() {
@@ -20,18 +15,6 @@ export function setupMutationObserver() {
       }
     });
   });
-}
-
-function checkRichFormExistence(richFormType: RichFormType) {
-  const activeForm = getActiveFormElement(richFormType);
-
-  if (!activeForm) {
-    return false;
-  }
-
-  console.log("💡 フォームの存在を検知しました:", richFormType, activeForm);
-  mountTemplateTool(activeForm, richFormType);
-  return true;
 }
 
 function handleModeSwitch(
