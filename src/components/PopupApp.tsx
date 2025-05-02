@@ -1,24 +1,7 @@
-import { createSignal, onMount } from "solid-js";
-import {
-  getMarkdownConversionEnable,
-  setMarkdownConversionEnable as setMdConversionEnable,
-} from "~/features";
+import { useMarkdownConversionEnabled } from "~/hooks";
 
 export function PopupApp() {
-  const [markdownConversionEnabled, setMarkdownConversionEnabled] = createSignal(false);
-
-  // 初回ロード時にchrome.storage.localから設定を取得
-  onMount(async () => {
-    const currentState = await getMarkdownConversionEnable();
-    setMarkdownConversionEnabled(currentState);
-  });
-
-  // トグル変更ハンドラ
-  const handleToggle = async (e: Event) => {
-    const checked = (e.target as HTMLInputElement).checked;
-    setMarkdownConversionEnabled(checked);
-    await setMdConversionEnable(checked);
-  };
+  const { markdownConversionEnabled, handleToggle } = useMarkdownConversionEnabled();
 
   return (
     <div class="">

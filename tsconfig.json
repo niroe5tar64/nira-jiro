@@ -5,6 +5,7 @@
       "~/components": ["src/components"],
       "~/dom": ["src/dom"],
       "~/features": ["src/features"],
+      "~/hooks": ["src/components/hooks"],
       "~/types": ["src/types"],
       "~/utils": ["src/utils"]
     },
