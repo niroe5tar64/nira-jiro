@@ -1,2 +1,2 @@
-export * from "./convert-markdown";
+export * from "./convertMarkdown";
 export * from "./setup";
