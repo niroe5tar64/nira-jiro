@@ -19,21 +19,19 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: "dist",
       rollupOptions: {
-        input: {
-          content: path.resolve(__dirname, "src/extension/content.ts"),
-          popup: path.resolve(__dirname, "src/extension/popup.ts"),
-        },
+        input: { content: path.resolve(__dirname, "src/extension/content.ts") },
         output: {
-          entryFileNames: (chunkInfo) => {
-            if (chunkInfo.name === "popup") return "popup.js";
-            return "content.js";
-          },
-          assetFileNames: "content.css",
+          format: "iife",
+          entryFileNames: "[name].js",
+          assetFileNames: "[name].css",
         },
       },
       emptyOutDir: true,
       target: "esnext",
       polyfillDynamicImport: false,
+    },
+    css: {
+      postcss: "./postcss.config.js",
     },
     resolve: {
       alias: {

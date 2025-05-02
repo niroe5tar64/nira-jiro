@@ -3,6 +3,7 @@
   "name": "韮次郎 - Jira拡張機能",
   "version": "1.0",
   "description": "Jiraにテンプレートや記法変換を追加する拡張機能「韮次郎」",
+  "permissions": ["storage"],
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",
@@ -21,8 +22,7 @@
   "content_scripts": [
     {
       "matches": ["https://{{JIRA_DOMAIN}}/*"],
-      "js": ["content.js"],
-      "css": ["content.css"]
+      "js": ["content.js"]
     }
   ]
 }
