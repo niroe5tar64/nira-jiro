@@ -1,9 +1,9 @@
 import "../index.css";
 
 import { render } from "solid-js/web";
-import { PopupApp } from "~/components";
+import { PlaygroundRoot } from "./components/PlaygroundRoot";
 
 const root = document.getElementById("playground-root");
 if (root) {
-  render(PopupApp, root);
+  render(PlaygroundRoot, root);
 }

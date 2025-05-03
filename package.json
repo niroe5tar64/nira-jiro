@@ -20,7 +20,7 @@
   },
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --config vite.config.popup.ts",
     "build": "vite build --config vite.config.content.ts && vite build --config vite.config.popup.ts",
     "format": "biome format . --write",
     "format:check": "biome format . --skip-errors",
@@ -29,6 +29,7 @@
   },
   "type": "module",
   "dependencies": {
+    "dedent": "^1.6.0",
     "solid-js": "^1.9.5"
   }
 }
