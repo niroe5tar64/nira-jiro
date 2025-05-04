@@ -7,6 +7,7 @@ import type {
   MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
+  MarkdownBlankLineNode,
 } from "../nodes";
 
 export class HtmlRendererVisitor extends AbstractMarkdownNodeVisitor<string> {
@@ -43,6 +44,10 @@ export class HtmlRendererVisitor extends AbstractMarkdownNodeVisitor<string> {
 
   visitText(node: MarkdownTextNode): string {
     return escapeHtml(node.content);
+  }
+
+  visitBlankLine(node: MarkdownBlankLineNode): string {
+    return node.content;
   }
 }
 

@@ -6,6 +6,7 @@ import type {
   MarkdownBlockquoteNode,
   MarkdownListItemNode,
   MarkdownTextNode,
+  MarkdownBlankLineNode,
 } from "../../common/ast/nodes";
 
 import { MarkdownListNode } from "../../common/ast/nodes";
@@ -69,5 +70,9 @@ export class JiraMarkdownRendererVisitor extends AbstractMarkdownNodeVisitor<str
 
   private listMarker(): string {
     return this.indentLevel > 0 ? `${"*".repeat(this.indentLevel)}` : "*";
+  }
+
+  visitBlankLine(node: MarkdownBlankLineNode): string {
+    return node.content;
   }
 }

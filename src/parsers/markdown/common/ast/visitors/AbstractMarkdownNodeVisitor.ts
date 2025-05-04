@@ -6,6 +6,7 @@ import type {
   MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
+  MarkdownBlankLineNode,
 } from "../nodes";
 
 /**
@@ -19,4 +20,5 @@ export abstract class AbstractMarkdownNodeVisitor<T> {
   abstract visitList(node: MarkdownListNode): T;
   abstract visitListItem(node: MarkdownListItemNode): T;
   abstract visitText(node: MarkdownTextNode): T;
+  abstract visitBlankLine(node: MarkdownBlankLineNode): T;
 }

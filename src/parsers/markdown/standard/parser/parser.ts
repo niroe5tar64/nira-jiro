@@ -7,6 +7,7 @@ import {
   MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
+  MarkdownBlankLineNode,
 } from "../../common/ast/nodes";
 
 import {
@@ -57,6 +58,7 @@ export class StandardParser {
         this.nodes.push(list);
         i = nextIndex;
       } else if (token instanceof BlankLineToken) {
+        this.nodes.push(this.buildBlankLine());
         i++;
       } else {
         i++;
@@ -169,5 +171,9 @@ export class StandardParser {
     }
 
     return [currentList, i];
+  }
+
+  private buildBlankLine(): MarkdownBlankLineNode {
+    return new MarkdownBlankLineNode();
   }
 }

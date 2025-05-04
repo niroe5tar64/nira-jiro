@@ -8,4 +8,5 @@ export type SerializedMarkdownNode =
   | { type: "blockquote"; children: SerializedMarkdownNode[] }
   | { type: "list"; ordered: boolean; items: SerializedMarkdownNode[] }
   | { type: "listItem"; children: SerializedMarkdownNode[] }
-  | { type: "text"; content: string };
+  | { type: "text"; content: string }
+  | { type: "blankLine"; content: string };

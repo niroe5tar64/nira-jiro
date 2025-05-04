@@ -8,6 +8,7 @@ import type {
   MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
+  MarkdownBlankLineNode,
 } from "../nodes";
 
 export class AstSerializerVisitor extends AbstractMarkdownNodeVisitor<SerializedMarkdownNode> {
@@ -59,6 +60,13 @@ export class AstSerializerVisitor extends AbstractMarkdownNodeVisitor<Serialized
   visitText(node: MarkdownTextNode): SerializedMarkdownNode {
     return {
       type: "text" as const,
+      content: node.content,
+    };
+  }
+
+  visitBlankLine(node: MarkdownBlankLineNode): SerializedMarkdownNode {
+    return {
+      type: "blankLine" as const,
       content: node.content,
     };
   }

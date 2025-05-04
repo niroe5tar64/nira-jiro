@@ -16,6 +16,7 @@ import {
   MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
+  MarkdownBlankLineNode,
 } from "../../ast/nodes";
 
 /**
@@ -54,5 +55,9 @@ export class AstDeserializerVisitor {
 
   visitText(node: SerializedTextNode): MarkdownTextNode {
     return new MarkdownTextNode(node.content);
+  }
+
+  visitBlankLine(node: MarkdownBlankLineNode): MarkdownBlankLineNode {
+    return new MarkdownBlankLineNode();
   }
 }

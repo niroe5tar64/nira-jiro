@@ -7,6 +7,7 @@ import {
   MarkdownCodeBlockNode,
   MarkdownBlockquoteNode,
   MarkdownTextNode,
+  MarkdownBlankLineNode,
 } from "../../common/ast/nodes";
 
 import {
@@ -54,6 +55,7 @@ export class JiraParser {
         this.nodes.push(blockquote);
         i = nextIndex;
       } else if (token instanceof BlankLineToken) {
+        this.nodes.push(this.buildBlankLine());
         i++;
       } else {
         i++;
@@ -166,5 +168,9 @@ export class JiraParser {
     }
 
     return [new MarkdownBlockquoteNode(children), i];
+  }
+
+  private buildBlankLine(): MarkdownBlankLineNode {
+    return new MarkdownBlankLineNode();
   }
 }

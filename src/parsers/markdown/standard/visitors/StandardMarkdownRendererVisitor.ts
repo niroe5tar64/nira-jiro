@@ -7,6 +7,7 @@ import type {
   MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
+  MarkdownBlankLineNode,
 } from "../../common/ast/nodes";
 
 export class StandardMarkdownRendererVisitor extends AbstractMarkdownNodeVisitor<string> {
@@ -62,6 +63,10 @@ export class StandardMarkdownRendererVisitor extends AbstractMarkdownNodeVisitor
   }
 
   visitText(node: MarkdownTextNode): string {
+    return node.content;
+  }
+
+  visitBlankLine(node: MarkdownBlankLineNode): string {
     return node.content;
   }
 }

@@ -6,3 +6,4 @@ export * from "./MarkdownListItemNode";
 export * from "./MarkdownBlockquoteNode";
 export * from "./MarkdownCodeBlockNode";
 export * from "./MarkdownTextNode";
+export * from "./MarkdownBlankLineNode";
