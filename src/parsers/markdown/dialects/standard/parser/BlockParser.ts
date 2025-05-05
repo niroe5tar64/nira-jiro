@@ -11,6 +11,7 @@ import {
   createListNode,
 } from "../../../common/ast/block";
 import { BlockLexer } from "../lexer/BlockLexer";
+import { attachInlineNodesToBlocks } from "../../../common/ast/helpers/attachInlineNodesToBlocks";
 
 export class BlockParser {
   private index = 0;
@@ -95,7 +96,10 @@ export class BlockParser {
       }
     }
 
-    return nodes;
+    return attachInlineNodesToBlocks(nodes, (text) => {
+      const tokens = new InlineLexer(text).tokenize();
+      return new InlineParser(tokens).parse();
+    });
   }
 
   private parseCodeBlock() {

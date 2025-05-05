@@ -371,8 +371,8 @@ it("parses nested blocks inside blockquote", () => {
     > # Quote Heading
     > - List item in quote
     >
-    > Paragraph in quote
-    Outside paragraph
+    > Paragraph in **quote**
+    Outside *paragraph*
   `;
   expect(parseToAst(input)).toMatchInlineSnapshot(
     [
@@ -391,13 +391,19 @@ it("parses nested blocks inside blockquote", () => {
           },
           {
             kind: "paragraph",
-            rawText: "Paragraph in quote",
-            inline: [{ kind: "text", content: "Paragraph in quote" }],
+            rawText: "Paragraph in **quote**",
+            inline: [
+              { kind: "text", content: "Paragraph in " },
+              { kind: "strong", content: "quote" },
+            ],
           },
           {
             kind: "paragraph",
-            rawText: "Outside paragraph",
-            inline: [{ kind: "text", content: "Outside paragraph" }],
+            rawText: "Outside *paragraph*",
+            inline: [
+              { kind: "text", content: "Outside " },
+              { kind: "emphasis", content: "paragraph" },
+            ],
           },
         ],
       },
@@ -430,22 +436,30 @@ it("parses nested blocks inside blockquote", () => {
           {
             "inline": [
               {
-                "content": "Paragraph in quote",
+                "content": "Paragraph in ",
                 "kind": "text",
+              },
+              {
+                "content": "quote",
+                "kind": "strong",
               },
             ],
             "kind": "paragraph",
-            "rawText": "Paragraph in quote",
+            "rawText": "Paragraph in **quote**",
           },
           {
             "inline": [
               {
-                "content": "Outside paragraph",
+                "content": "Outside ",
                 "kind": "text",
+              },
+              {
+                "content": "paragraph",
+                "kind": "emphasis",
               },
             ],
             "kind": "paragraph",
-            "rawText": "Outside paragraph",
+            "rawText": "Outside *paragraph*",
           },
         ],
         "kind": "blockquote",
