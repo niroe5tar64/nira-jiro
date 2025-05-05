@@ -1,13 +1,14 @@
 import type { BlockNodeBase } from "./BlockNodeBase";
+import type { BlockNode } from "./index";
 
 export interface BlockquoteNode extends BlockNodeBase {
   kind: "blockquote";
-  lines: string[]; // 空行や通常テキストも含めて一括で
+  children: BlockNode[];
 }
 
-export function createBlockquoteNode(lines: string[]): BlockquoteNode {
+export function createBlockquoteNode(children: BlockNode[]): BlockquoteNode {
   return {
     kind: "blockquote",
-    lines,
+    children,
   };
 }

@@ -10,6 +10,7 @@ import {
   createBlockquoteNode,
   createListNode,
 } from "../../../common/ast/block";
+import { BlockLexer } from "../lexer/BlockLexer";
 
 export class BlockParser {
   private index = 0;
@@ -59,7 +60,22 @@ export class BlockParser {
         }
 
         case "blockquote": {
-          nodes.push(this.parseBlockquote());
+          const quoteLines: string[] = [];
+
+          while (this.peek()?.kind === "blockquote") {
+            const token = this.next();
+            const hasContent = token && "content" in token && typeof token.content === "string";
+            if (hasContent) {
+              quoteLines.push(token.content);
+            } else {
+              quoteLines.push("");
+            }
+          }
+
+          const innerMarkdown = quoteLines.join("\n");
+          const innerTokens = new BlockLexer(innerMarkdown).tokenize();
+          const innerNodes = new BlockParser(innerTokens).parse();
+          nodes.push(createBlockquoteNode(innerNodes));
           break;
         }
 
@@ -102,20 +118,6 @@ export class BlockParser {
     }
 
     return createCodeBlockNode(start.language, content);
-  }
-
-  private parseBlockquote() {
-    const lines: string[] = [];
-
-    while (!this.eof()) {
-      const token = this.peek();
-      if (!token || token.kind !== "blockquote") break;
-
-      lines.push(token.content);
-      this.next();
-    }
-
-    return createBlockquoteNode(lines);
   }
 
   private parseList() {
