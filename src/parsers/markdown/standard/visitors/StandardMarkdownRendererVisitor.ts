@@ -4,13 +4,16 @@ import type {
   MarkdownParagraphNode,
   MarkdownCodeBlockNode,
   MarkdownBlockquoteNode,
-  MarkdownListNode,
   MarkdownListItemNode,
   MarkdownTextNode,
   MarkdownBlankLineNode,
 } from "../../common/ast/nodes";
 
+import { MarkdownListNode } from "../../common/ast/nodes";
+
 export class StandardMarkdownRendererVisitor extends AbstractMarkdownNodeVisitor<string> {
+  private listState = { marker: "*", indentLevel: 0 };
+
   visitHeading(node: MarkdownHeadingNode): string {
     const content = node.children.map((child) => child.accept(this)).join("");
     const prefix = "#".repeat(node.level);
@@ -28,38 +31,46 @@ export class StandardMarkdownRendererVisitor extends AbstractMarkdownNodeVisitor
   }
 
   visitBlockquote(node: MarkdownBlockquoteNode): string {
-    const lines = node.children
-      .map((child) => child.accept(this))
-      .join("\n")
-      .split("\n");
+    const lines = node.children.map((child) => child.accept(this));
 
     const content = lines
       .map((line, index) => {
         const hasContent = line.trim() !== "";
-        const isLastLine = index === lines.length - 1;
-        return hasContent && !isLastLine ? `> ${line}` : null;
+        const isFirstLine = index === 0;
+        return hasContent && isFirstLine ? `> ${line}` : line;
       })
-      .filter((line) => line !== null)
-      .join("\n");
+      .join("");
 
     return `${content}\n`;
   }
 
   visitList(node: MarkdownListNode): string {
-    const ordered = node.ordered;
-    let index = 1;
+    const previousListState = this.listState;
+    this.listState = {
+      marker: node.ordered ? "1." : "- ",
+      indentLevel: this.listState.indentLevel + 1,
+    };
 
-    const items = node.items.map((item) => {
-      const prefix = ordered ? `${index++}. ` : "- ";
-      const content = item.accept(this);
-      return prefix + content;
-    });
+    const content = node.items.map((item) => item.accept(this)).join("");
+    this.listState = previousListState;
 
-    return `${items.join("\n")}\n`;
+    return content;
   }
 
   visitListItem(node: MarkdownListItemNode): string {
-    return node.children.map((child) => child.accept(this)).join("");
+    const { marker, indentLevel } = this.listState;
+    const prefix = " ".repeat(indentLevel * 2) + marker;
+    const content = node.children
+      .filter((child) => !(child instanceof MarkdownListNode))
+      .map((child) => child.accept(this))
+      .join("");
+
+    const nestedList = node.children
+      .filter((child) => child instanceof MarkdownListNode)
+      .map((child) => child.accept(this))
+      .join("");
+
+    return `${prefix} ${content}${nestedList}`;
   }
 
   visitText(node: MarkdownTextNode): string {

@@ -12,7 +12,7 @@ import type {
 import { MarkdownListNode } from "../../common/ast/nodes";
 
 export class JiraMarkdownRendererVisitor extends AbstractMarkdownNodeVisitor<string> {
-  private indentLevel = 0;
+  private listState = { marker: "*", indentLevel: 0 };
 
   visitHeading(node: MarkdownHeadingNode): string {
     const content = node.children.map((child) => child.accept(this)).join("");
@@ -21,7 +21,7 @@ export class JiraMarkdownRendererVisitor extends AbstractMarkdownNodeVisitor<str
 
   visitParagraph(node: MarkdownParagraphNode): string {
     const content = node.children.map((child) => child.accept(this)).join("");
-    return `${content}\n\n`;
+    return `${content}\n`;
   }
 
   visitCodeBlock(node: MarkdownCodeBlockNode): string {
@@ -38,18 +38,21 @@ export class JiraMarkdownRendererVisitor extends AbstractMarkdownNodeVisitor<str
   }
 
   visitList(node: MarkdownListNode): string {
-    const previousIndent = this.indentLevel;
-    this.indentLevel++;
+    const previousListState = this.listState;
+    this.listState = {
+      marker: node.ordered ? "#" : "*",
+      indentLevel: this.listState.indentLevel + 1,
+    };
 
     const content = node.items.map((item) => item.accept(this)).join("");
-
-    this.indentLevel = previousIndent;
+    this.listState = previousListState;
 
     return content;
   }
 
   visitListItem(node: MarkdownListItemNode): string {
-    const prefix = this.listMarker();
+    const { marker, indentLevel } = this.listState;
+    const prefix = marker.repeat(indentLevel);
     const content = node.children
       .filter((child) => !(child instanceof MarkdownListNode))
       .map((child) => child.accept(this))
@@ -60,16 +63,12 @@ export class JiraMarkdownRendererVisitor extends AbstractMarkdownNodeVisitor<str
       .map((child) => child.accept(this))
       .join("");
 
-    return `${prefix} ${content}\n${nestedList}`;
+    return `${prefix} ${content}${nestedList}`;
   }
 
   visitText(node: MarkdownTextNode): string {
     // Jira記法的にエスケープ必要な場合はここで対応
     return node.content;
-  }
-
-  private listMarker(): string {
-    return this.indentLevel > 0 ? `${"*".repeat(this.indentLevel)}` : "*";
   }
 
   visitBlankLine(node: MarkdownBlankLineNode): string {
