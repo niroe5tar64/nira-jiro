@@ -1,10 +1,16 @@
 import type { BlockNodeBase } from "./BlockNodeBase";
+import type { InlineNode } from "../inline";
 
 export interface ParagraphNode extends BlockNodeBase {
   kind: "paragraph";
-  rawText: string; // インライン構文を処理する前のテキスト
+  rawText: string;
+  inline: InlineNode[];
 }
 
-export function createParagraphNode(rawText: string): ParagraphNode {
-  return { kind: "paragraph", rawText };
+export function createParagraphNode(rawText: string, inline: InlineNode[] = []): ParagraphNode {
+  return {
+    kind: "paragraph",
+    rawText,
+    inline,
+  };
 }

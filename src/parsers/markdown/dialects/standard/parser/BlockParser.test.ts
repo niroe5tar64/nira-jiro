@@ -37,6 +37,12 @@ describe("BlockParser", () => {
           "text": "Heading 1",
         },
         {
+          "inline": [
+            {
+              "content": "This is a paragraph.",
+              "kind": "text",
+            },
+          ],
           "kind": "paragraph",
           "rawText": "This is a paragraph.",
         },
@@ -92,6 +98,12 @@ describe("BlockParser", () => {
         {
           kind: "paragraph",
           rawText: "Paragraph here.",
+          inline: [
+            {
+              kind: "text",
+              content: "Paragraph here.",
+            },
+          ],
         },
       ],
       `
@@ -107,6 +119,12 @@ describe("BlockParser", () => {
           ],
         },
         {
+          "inline": [
+            {
+              "content": "Paragraph here.",
+              "kind": "text",
+            },
+          ],
           "kind": "paragraph",
           "rawText": "Paragraph here.",
         },
@@ -176,6 +194,106 @@ describe("BlockParser", () => {
             },
           ],
           "kind": "list",
+        },
+      ]
+    `,
+    );
+  });
+});
+
+describe("BlockParser with inline structure", () => {
+  it("parses paragraph with inline emphasis and strong", () => {
+    const input = dedent`
+      This is a paragraph with **bold** and *italic* text.
+    `;
+    expect(parseToAst(input)).toMatchInlineSnapshot(
+      [
+        {
+          kind: "paragraph",
+          rawText: "This is a paragraph with **bold** and *italic* text.",
+          inline: [
+            {
+              kind: "text",
+              content: "This is a paragraph with ",
+            },
+            {
+              kind: "strong",
+              content: "bold",
+            },
+            {
+              kind: "text",
+              content: " and ",
+            },
+            {
+              kind: "emphasis",
+              content: "italic",
+            },
+            {
+              kind: "text",
+              content: " text.",
+            },
+          ],
+        },
+      ],
+      `
+      [
+        {
+          "inline": [
+            {
+              "content": "This is a paragraph with ",
+              "kind": "text",
+            },
+            {
+              "content": "bold",
+              "kind": "strong",
+            },
+            {
+              "content": " and ",
+              "kind": "text",
+            },
+            {
+              "content": "italic",
+              "kind": "emphasis",
+            },
+            {
+              "content": " text.",
+              "kind": "text",
+            },
+          ],
+          "kind": "paragraph",
+          "rawText": "This is a paragraph with **bold** and *italic* text.",
+        },
+      ]
+    `,
+    );
+  });
+
+  it("parses paragraph with only text", () => {
+    const input = "Just a plain paragraph.";
+    expect(parseToAst(input)).toMatchInlineSnapshot(
+      [
+        {
+          kind: "paragraph",
+          rawText: "Just a plain paragraph.",
+          inline: [
+            {
+              kind: "text",
+              content: "Just a plain paragraph.",
+            },
+          ],
+        },
+      ],
+      `
+      [
+        {
+          "inline": [
+            {
+              "content": "Just a plain paragraph.",
+              "kind": "text",
+            },
+          ],
+          "kind": "paragraph",
+          "rawText": "Just a plain paragraph.",
         },
       ]
     `,

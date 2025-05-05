@@ -1,5 +1,7 @@
 import type { BlockToken } from "../../../common/tokens/block";
 import type { BlockNode } from "../../../common/ast/block";
+import { InlineLexer } from "../lexer/InlineLexer";
+import { InlineParser } from "./InlineParser";
 
 import {
   createHeadingNode,
@@ -43,7 +45,9 @@ export class BlockParser {
 
         case "paragraph": {
           this.next();
-          nodes.push(createParagraphNode(token.content));
+          const inlineTokens = new InlineLexer(token.content).tokenize();
+          const inlineNodes = new InlineParser(inlineTokens).parse();
+          nodes.push(createParagraphNode(token.content, inlineNodes));
           break;
         }
 
