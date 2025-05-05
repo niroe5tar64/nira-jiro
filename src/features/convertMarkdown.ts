@@ -5,7 +5,7 @@ import {
   renderStandardMarkdown,
   renderJiraMarkdown,
   renderHtml,
-} from "../parsers/markdown";
+} from "../parsers/markdown_old";
 
 type MarkdownFlavor = "standard" | "jira";
 type DocumentFormat = MarkdownFlavor | "html";
