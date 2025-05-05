@@ -211,24 +211,32 @@ describe("BlockParser", () => {
           kind: "list",
           items: [
             {
-              content: "Item 1",
-              level: 1,
+              kind: "list_item",
               ordered: false,
+              level: 1,
+              rawText: "Item 1",
+              inline: [{ kind: "text", content: "Item 1" }],
             },
             {
-              content: "Subitem 1",
+              kind: "list_item",
+              ordered: false,
               level: 2,
-              ordered: false,
+              rawText: "Subitem 1",
+              inline: [{ kind: "text", content: "Subitem 1" }],
             },
             {
-              content: "Numbered 1",
-              level: 1,
+              kind: "list_item",
               ordered: true,
+              level: 1,
+              rawText: "Numbered 1",
+              inline: [{ kind: "text", content: "Numbered 1" }],
             },
             {
-              content: "Numbered 2",
-              level: 1,
+              kind: "list_item",
               ordered: true,
+              level: 1,
+              rawText: "Numbered 2",
+              inline: [{ kind: "text", content: "Numbered 2" }],
             },
           ],
         },
@@ -238,24 +246,52 @@ describe("BlockParser", () => {
         {
           "items": [
             {
-              "content": "Item 1",
+              "inline": [
+                {
+                  "content": "Item 1",
+                  "kind": "text",
+                },
+              ],
+              "kind": "list_item",
               "level": 1,
               "ordered": false,
+              "rawText": "Item 1",
             },
             {
-              "content": "Subitem 1",
+              "inline": [
+                {
+                  "content": "Subitem 1",
+                  "kind": "text",
+                },
+              ],
+              "kind": "list_item",
               "level": 2,
               "ordered": false,
+              "rawText": "Subitem 1",
             },
             {
-              "content": "Numbered 1",
+              "inline": [
+                {
+                  "content": "Numbered 1",
+                  "kind": "text",
+                },
+              ],
+              "kind": "list_item",
               "level": 1,
               "ordered": true,
+              "rawText": "Numbered 1",
             },
             {
-              "content": "Numbered 2",
+              "inline": [
+                {
+                  "content": "Numbered 2",
+                  "kind": "text",
+                },
+              ],
+              "kind": "list_item",
               "level": 1,
               "ordered": true,
+              "rawText": "Numbered 2",
             },
           ],
           "kind": "list",
@@ -368,8 +404,8 @@ describe("BlockParser with inline structure", () => {
 
 it("parses nested blocks inside blockquote", () => {
   const input = dedent`
-    > # Quote Heading
-    > - List item in quote
+    > # Quote **Heading**
+    > - List **item** in *quote*
     >
     > Paragraph in **quote**
     Outside *paragraph*
@@ -382,12 +418,28 @@ it("parses nested blocks inside blockquote", () => {
           {
             kind: "heading",
             level: 1,
-            rawText: "Quote Heading",
-            inline: [{ kind: "text", content: "Quote Heading" }],
+            rawText: "Quote **Heading**",
+            inline: [
+              { kind: "text", content: "Quote " },
+              { kind: "strong", content: "Heading" },
+            ],
           },
           {
             kind: "list",
-            items: [{ ordered: false, level: 1, content: "List item in quote" }],
+            items: [
+              {
+                kind: "list_item",
+                ordered: false,
+                level: 1,
+                rawText: "List **item** in *quote*",
+                inline: [
+                  { kind: "text", content: "List " },
+                  { kind: "strong", content: "item" },
+                  { kind: "text", content: " in " },
+                  { kind: "emphasis", content: "quote" },
+                ],
+              },
+            ],
           },
           {
             kind: "paragraph",
@@ -415,20 +467,43 @@ it("parses nested blocks inside blockquote", () => {
           {
             "inline": [
               {
-                "content": "Quote Heading",
+                "content": "Quote ",
                 "kind": "text",
+              },
+              {
+                "content": "Heading",
+                "kind": "strong",
               },
             ],
             "kind": "heading",
             "level": 1,
-            "rawText": "Quote Heading",
+            "rawText": "Quote **Heading**",
           },
           {
             "items": [
               {
-                "content": "List item in quote",
+                "inline": [
+                  {
+                    "content": "List ",
+                    "kind": "text",
+                  },
+                  {
+                    "content": "item",
+                    "kind": "strong",
+                  },
+                  {
+                    "content": " in ",
+                    "kind": "text",
+                  },
+                  {
+                    "content": "quote",
+                    "kind": "emphasis",
+                  },
+                ],
+                "kind": "list_item",
                 "level": 1,
                 "ordered": false,
+                "rawText": "List **item** in *quote*",
               },
             ],
             "kind": "list",

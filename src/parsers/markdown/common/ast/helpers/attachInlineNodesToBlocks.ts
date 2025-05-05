@@ -17,10 +17,20 @@ export function attachInlineNodesToBlocks(
         const inline = parseInline(node.rawText);
         return { ...node, inline };
       }
+
       case "blockquote": {
         const nested = attachInlineNodesToBlocks(node.children, parseInline);
         return { ...node, children: nested };
       }
+
+      case "list": {
+        const updatedItems = node.items.map((item) => ({
+          ...item,
+          inline: parseInline(item.rawText),
+        }));
+        return { ...node, items: updatedItems };
+      }
+
       default:
         return node;
     }

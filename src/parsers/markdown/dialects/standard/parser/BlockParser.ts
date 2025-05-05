@@ -1,5 +1,5 @@
 import type { BlockToken } from "../../../common/tokens/block";
-import type { BlockNode } from "../../../common/ast/block";
+import type { BlockNode, ListItemNode } from "../../../common/ast/block";
 import { InlineLexer } from "../lexer/InlineLexer";
 import { InlineParser } from "./InlineParser";
 
@@ -9,6 +9,7 @@ import {
   createCodeBlockNode,
   createBlockquoteNode,
   createListNode,
+  createListItemNode,
 } from "../../../common/ast/block";
 import { BlockLexer } from "../lexer/BlockLexer";
 import { attachInlineNodesToBlocks } from "../../../common/ast/helpers/attachInlineNodesToBlocks";
@@ -125,21 +126,13 @@ export class BlockParser {
   }
 
   private parseList() {
-    const items: {
-      ordered: boolean;
-      level: number;
-      content: string;
-    }[] = [];
+    const items: ListItemNode[] = [];
 
     while (!this.eof()) {
       const token = this.peek();
       if (!token || token.kind !== "list_item") break;
 
-      items.push({
-        ordered: token.ordered,
-        level: token.level,
-        content: token.content,
-      });
+      items.push(createListItemNode(token.ordered, token.level, token.content));
       this.next();
     }
 

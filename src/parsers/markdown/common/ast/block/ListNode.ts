@@ -1,17 +1,12 @@
 import type { BlockNodeBase } from "./BlockNodeBase";
-
-export interface ListItem {
-  ordered: boolean;
-  level: number;
-  content: string;
-}
+import type { ListItemNode } from "./ListItemNode";
 
 export interface ListNode extends BlockNodeBase {
   kind: "list";
-  items: ListItem[];
+  items: ListItemNode[];
 }
 
-export function createListNode(items: ListItem[]): ListNode {
+export function createListNode(items: ListItemNode[]): ListNode {
   return {
     kind: "list",
     items,
