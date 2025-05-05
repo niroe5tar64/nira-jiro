@@ -38,8 +38,10 @@ export class BlockParser {
 
       switch (token.kind) {
         case "heading": {
-          this.next(); // consume
-          nodes.push(createHeadingNode(token.level, token.content));
+          this.next();
+          const inlineTokens = new InlineLexer(token.content).tokenize();
+          const inlineNodes = new InlineParser(inlineTokens).parse();
+          nodes.push(createHeadingNode(token.level, token.content, inlineNodes));
           break;
         }
 

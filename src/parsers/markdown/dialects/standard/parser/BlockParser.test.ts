@@ -22,19 +22,27 @@ describe("BlockParser", () => {
         {
           kind: "heading",
           level: 1,
-          text: "Heading 1",
+          rawText: "Heading 1",
+          inline: [{ kind: "text", content: "Heading 1" }],
         },
         {
           kind: "paragraph",
           rawText: "This is a paragraph.",
+          inline: [{ kind: "text", content: "This is a paragraph." }],
         },
       ],
       `
       [
         {
+          "inline": [
+            {
+              "content": "Heading 1",
+              "kind": "text",
+            },
+          ],
           "kind": "heading",
           "level": 1,
-          "text": "Heading 1",
+          "rawText": "Heading 1",
         },
         {
           "inline": [

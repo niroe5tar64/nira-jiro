@@ -1,11 +1,22 @@
 import type { BlockNodeBase } from "./BlockNodeBase";
+import type { InlineNode } from "../inline";
 
 export interface HeadingNode extends BlockNodeBase {
   kind: "heading";
   level: number; // 1〜6
-  text: string; // 見出しテキスト
+  rawText: string;
+  inline: InlineNode[];
 }
 
-export function createHeadingNode(level: number, text: string): HeadingNode {
-  return { kind: "heading", level, text };
+export function createHeadingNode(
+  level: number,
+  rawText: string,
+  inline: InlineNode[] = [],
+): HeadingNode {
+  return {
+    kind: "heading",
+    level,
+    rawText,
+    inline,
+  };
 }
