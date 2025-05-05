@@ -1,7 +1,7 @@
 import { describe, it, expect } from "bun:test";
 import dedent from "dedent";
 
-import { InlineLexer } from "./InlineLexer";
+import { InlineLexer } from "../lexer/InlineLexer";
 import { InlineParser } from "./InlineParser";
 import type { InlineNode } from "../../../common/ast/inline";
 

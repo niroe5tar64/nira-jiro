@@ -1,7 +1,7 @@
 import { describe, it, expect } from "bun:test";
 import dedent from "dedent";
 
-import { BlockLexer } from "../../standard/lexer/BlockLexer";
+import { BlockLexer } from "../lexer/BlockLexer";
 import { BlockParser } from "./BlockParser";
 import type { BlockNode } from "../../../common/ast/block";
 
@@ -17,17 +17,19 @@ describe("BlockParser", () => {
 
       This is a paragraph.
     `;
-    expect(parseToAst(input)).toMatchInlineSnapshot([
-      {
-        kind: "heading",
-        level: 1,
-        text: "Heading 1",
-      },
-      {
-        kind: "paragraph",
-        rawText: "This is a paragraph.",
-      },
-    ], `
+    expect(parseToAst(input)).toMatchInlineSnapshot(
+      [
+        {
+          kind: "heading",
+          level: 1,
+          text: "Heading 1",
+        },
+        {
+          kind: "paragraph",
+          rawText: "This is a paragraph.",
+        },
+      ],
+      `
       [
         {
           "kind": "heading",
@@ -39,7 +41,8 @@ describe("BlockParser", () => {
           "rawText": "This is a paragraph.",
         },
       ]
-    `);
+    `,
+    );
   });
 
   it("parses code block", () => {
@@ -48,13 +51,15 @@ describe("BlockParser", () => {
       console.log("hello");
       \`\`\`
     `;
-    expect(parseToAst(input)).toMatchInlineSnapshot([
-      {
-        kind: "code_block",
-        language: "js",
-        content: ['console.log("hello");'],
-      },
-    ], `
+    expect(parseToAst(input)).toMatchInlineSnapshot(
+      [
+        {
+          kind: "code_block",
+          language: "js",
+          content: ['console.log("hello");'],
+        },
+      ],
+      `
       [
         {
           "content": [
@@ -64,7 +69,8 @@ describe("BlockParser", () => {
           "language": "js",
         },
       ]
-    `);
+    `,
+    );
   });
 
   it("parses blockquotes", () => {
@@ -77,16 +83,18 @@ describe("BlockParser", () => {
 
       Paragraph here.
     `;
-    expect(parseToAst(input)).toMatchInlineSnapshot([
-      {
-        kind: "blockquote",
-        lines: ["Line 1", "Line 2", "", "Line 3", "Line 4"],
-      },
-      {
-        kind: "paragraph",
-        rawText: "Paragraph here.",
-      },
-    ], `
+    expect(parseToAst(input)).toMatchInlineSnapshot(
+      [
+        {
+          kind: "blockquote",
+          lines: ["Line 1", "Line 2", "", "Line 3", "Line 4"],
+        },
+        {
+          kind: "paragraph",
+          rawText: "Paragraph here.",
+        },
+      ],
+      `
       [
         {
           "kind": "blockquote",
@@ -103,7 +111,8 @@ describe("BlockParser", () => {
           "rawText": "Paragraph here.",
         },
       ]
-    `);
+    `,
+    );
   });
 
   it("parses list items with nesting", () => {
@@ -113,33 +122,35 @@ describe("BlockParser", () => {
       1. Numbered 1
       2. Numbered 2
     `;
-    expect(parseToAst(input)).toMatchInlineSnapshot([
-      {
-        kind: "list",
-        items: [
-          {
-            content: "Item 1",
-            level: 1,
-            ordered: false,
-          },
-          {
-            content: "Subitem 1",
-            level: 2,
-            ordered: false,
-          },
-          {
-            content: "Numbered 1",
-            level: 1,
-            ordered: true,
-          },
-          {
-            content: "Numbered 2",
-            level: 1,
-            ordered: true,
-          },
-        ],
-      },
-    ], `
+    expect(parseToAst(input)).toMatchInlineSnapshot(
+      [
+        {
+          kind: "list",
+          items: [
+            {
+              content: "Item 1",
+              level: 1,
+              ordered: false,
+            },
+            {
+              content: "Subitem 1",
+              level: 2,
+              ordered: false,
+            },
+            {
+              content: "Numbered 1",
+              level: 1,
+              ordered: true,
+            },
+            {
+              content: "Numbered 2",
+              level: 1,
+              ordered: true,
+            },
+          ],
+        },
+      ],
+      `
       [
         {
           "items": [
@@ -167,6 +178,7 @@ describe("BlockParser", () => {
           "kind": "list",
         },
       ]
-    `);
+    `,
+    );
   });
 });
