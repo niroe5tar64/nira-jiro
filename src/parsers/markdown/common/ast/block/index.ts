@@ -1,9 +1,13 @@
 export * from "./BlockNodeBase";
 export * from "./HeadingNode";
 export * from "./ParagraphNode";
-// TODO: 他のノードもここに追加予定
+export * from "./CodeBlockNode";
+export * from "./BlockquoteNode";
+export * from "./ListNode";
 
 export type BlockNode =
   | import("./HeadingNode").HeadingNode
-  | import("./ParagraphNode").ParagraphNode;
-// + 他ノードが追加されていく
+  | import("./ParagraphNode").ParagraphNode
+  | import("./CodeBlockNode").CodeBlockNode
+  | import("./BlockquoteNode").BlockquoteNode
+  | import("./ListNode").ListNode;
