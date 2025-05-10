@@ -1,4 +1,5 @@
 import type {
+  BlankLineNode,
   ParagraphNode,
   HeadingNode,
   BlockquoteNode,
@@ -15,6 +16,8 @@ export abstract class AbstractMarkdownNodeVisitor<T> {
   // BlockNode種別によるディスパッチ
   protected visitBlock(node: BlockNode): T {
     switch (node.kind) {
+      case "blank_line":
+        return this.visitBlankLine(node);
       case "paragraph":
         return this.visitParagraph(node);
       case "heading":
@@ -50,6 +53,7 @@ export abstract class AbstractMarkdownNodeVisitor<T> {
   }
 
   // BlockNode関連
+  protected abstract visitBlankLine(node: BlankLineNode): T;
   protected abstract visitParagraph(node: ParagraphNode): T;
   protected abstract visitHeading(node: HeadingNode): T;
   protected abstract visitBlockquote(node: BlockquoteNode): T;
