@@ -62,22 +62,8 @@ export class BlockParser {
         }
 
         case "blockquote": {
-          const quoteLines: string[] = [];
-
-          while (this.peek()?.kind === "blockquote") {
-            const token = this.next();
-            const hasContent = token && "content" in token && typeof token.content === "string";
-            if (hasContent) {
-              quoteLines.push(token.content);
-            } else {
-              quoteLines.push("");
-            }
-          }
-
-          const innerMarkdown = quoteLines.join("\n");
-          const innerTokens = new BlockLexer(innerMarkdown).tokenize();
-          const innerNodes = new BlockParser(innerTokens).parse();
-          nodes.push(createBlockquoteNode(innerNodes));
+          nodes.push(...this.parseBlockquotes());
+          nodes.push({ kind: "blank_line" });
           break;
         }
 
@@ -87,7 +73,8 @@ export class BlockParser {
         }
 
         case "blank_line": {
-          this.next(); // skip
+          this.next();
+          nodes.push({ kind: "blank_line" });
           break;
         }
 
@@ -137,5 +124,44 @@ export class BlockParser {
     }
 
     return createListNode(items);
+  }
+
+  private parseBlockquotes(): BlockNode[] {
+    const groups: string[][] = [];
+    let currentGroup: string[] = [];
+
+    while (!this.eof()) {
+      const token = this.next();
+
+      if (!(token && "kind" in token)) {
+        break;
+      }
+
+      if (token.kind === "blank_line") {
+        if (currentGroup.length > 0) {
+          groups.push(currentGroup);
+          currentGroup = [];
+        }
+        break;
+      }
+
+      if (token.kind === "blockquote") {
+        currentGroup.push(token.content);
+      } else if (currentGroup.length > 0 && token.kind === "paragraph") {
+        currentGroup.push(token.content);
+      } else {
+        break;
+      }
+    }
+
+    if (currentGroup.length > 0) {
+      groups.push(currentGroup);
+    }
+
+    return groups.map((lines) => {
+      const innerTokens = new BlockLexer(lines.join("\n")).tokenize();
+      const children = new BlockParser(innerTokens).parse();
+      return createBlockquoteNode(children);
+    });
   }
 }

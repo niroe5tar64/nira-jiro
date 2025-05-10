@@ -4,7 +4,6 @@ import dedent from "dedent";
 import { BlockLexer } from "../lexer/BlockLexer";
 import { BlockParser } from "./BlockParser";
 import type { BlockNode } from "../../../common/ast/block";
-import { children } from "solid-js";
 
 function parseToAst(markdown: string): BlockNode[] {
   const tokens = new BlockLexer(markdown).tokenize();
@@ -26,6 +25,7 @@ describe("BlockParser", () => {
           rawText: "Heading 1",
           inline: [{ kind: "text", content: "Heading 1" }],
         },
+        { kind: "blank_line" },
         {
           kind: "paragraph",
           rawText: "This is a paragraph.",
@@ -44,6 +44,9 @@ describe("BlockParser", () => {
           "kind": "heading",
           "level": 1,
           "rawText": "Heading 1",
+        },
+        {
+          "kind": "blank_line",
         },
         {
           "inline": [
@@ -114,6 +117,9 @@ describe("BlockParser", () => {
               inline: [{ kind: "text", content: "Line 2" }],
             },
             {
+              kind: "blank_line",
+            },
+            {
               kind: "paragraph",
               rawText: "Line 3",
               inline: [{ kind: "text", content: "Line 3" }],
@@ -125,6 +131,7 @@ describe("BlockParser", () => {
             },
           ],
         },
+        { kind: "blank_line" },
         {
           kind: "paragraph",
           rawText: "Paragraph here.",
@@ -161,6 +168,9 @@ describe("BlockParser", () => {
               "rawText": "Line 2",
             },
             {
+              "kind": "blank_line",
+            },
+            {
               "inline": [
                 {
                   "content": "Line 3",
@@ -182,6 +192,9 @@ describe("BlockParser", () => {
             },
           ],
           "kind": "blockquote",
+        },
+        {
+          "kind": "blank_line",
         },
         {
           "inline": [
@@ -441,6 +454,7 @@ it("parses nested blocks inside blockquote", () => {
               },
             ],
           },
+          { kind: "blank_line" },
           {
             kind: "paragraph",
             rawText: "Paragraph in **quote**",
@@ -459,6 +473,7 @@ it("parses nested blocks inside blockquote", () => {
           },
         ],
       },
+      { kind: "blank_line" },
     ],
     `
     [
@@ -509,6 +524,9 @@ it("parses nested blocks inside blockquote", () => {
             "kind": "list",
           },
           {
+            "kind": "blank_line",
+          },
+          {
             "inline": [
               {
                 "content": "Paragraph in ",
@@ -538,6 +556,9 @@ it("parses nested blocks inside blockquote", () => {
           },
         ],
         "kind": "blockquote",
+      },
+      {
+        "kind": "blank_line",
       },
     ]
   `,
