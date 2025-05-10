@@ -226,7 +226,7 @@ describe("BlockLexer", () => {
         { kind: "blockquote", content: "Still quoted - 01." },
         { kind: "blockquote", content: "" }, // 空行も引用扱い
         { kind: "blockquote", content: "Still quoted - 02." },
-        { kind: "blockquote", content: "Still quoted - 03." },
+        { kind: "paragraph", content: "Still quoted - 03." },
         { kind: "blank_line" },
         { kind: "paragraph", content: "This is a paragraph line." },
       ],
@@ -250,7 +250,7 @@ describe("BlockLexer", () => {
         },
         {
           "content": "Still quoted - 03.",
-          "kind": "blockquote",
+          "kind": "paragraph",
         },
         {
           "kind": "blank_line",

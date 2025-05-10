@@ -3,7 +3,6 @@ import type { BlockToken } from "../../../common/tokens/block";
 export class BlockLexer {
   private lines: string[];
   private insideCodeBlock = false;
-  private insideBlockquote = false;
 
   constructor(private source: string) {
     this.lines = source.split(/\r?\n/);
@@ -35,29 +34,16 @@ export class BlockLexer {
         continue;
       }
 
-      // Empty line
-      if (trimmed === "") {
-        // 引用の途中の空行も引用継続扱い
-        if (this.insideBlockquote) {
-          tokens.push({ kind: "blockquote", content: "" });
-        } else {
-          tokens.push({ kind: "blank_line" });
-        }
-        continue;
-      }
-
       // Blockquote Line
       const blockquoteMatch = line.match(/^>\s?(.*)$/);
       if (blockquoteMatch) {
         tokens.push({ kind: "blockquote", content: blockquoteMatch[1] });
-        this.insideBlockquote = true;
         continue;
       }
 
-      // 引用の継続条件: 空行ではない + 直前が引用
-      if (this.insideBlockquote && trimmed !== "") {
-        this.insideBlockquote = false;
-        tokens.push({ kind: "blockquote", content: trimmed });
+      // Empty line
+      if (trimmed === "") {
+        tokens.push({ kind: "blank_line" });
         continue;
       }
 
