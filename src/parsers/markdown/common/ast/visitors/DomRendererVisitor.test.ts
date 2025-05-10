@@ -30,6 +30,7 @@ describe("DomRendererVisitor", () => {
     `;
     const htmlLiteral = dedent`
       <h1>Hello <strong>World</strong></h1>
+      <br>
       <p>This is <em>italic</em> text.</p>
     `.replace(/\n\s*/g, "");
     expect(renderToHTML(input)).toMatchInlineSnapshot(`"${htmlLiteral}"`);

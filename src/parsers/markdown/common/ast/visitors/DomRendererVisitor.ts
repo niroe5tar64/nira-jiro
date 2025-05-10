@@ -6,6 +6,7 @@ import type {
   BlockquoteNode,
   ListNode,
   CodeBlockNode,
+  BlankLineNode,
 } from "../block";
 import type { TextNode, EmphasisNode, StrongNode } from "../inline";
 
@@ -16,6 +17,11 @@ export class DomRendererVisitor extends AbstractMarkdownNodeVisitor<Node> {
       fragment.appendChild(this.visitBlock(node));
     }
     return fragment;
+  }
+
+  protected visitBlankLine(node: BlankLineNode): Node {
+    const br = document.createElement("br");
+    return br;
   }
 
   protected visitParagraph(node: ParagraphNode): HTMLElement {
