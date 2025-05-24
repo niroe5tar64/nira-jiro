@@ -38,20 +38,21 @@ export class BlockLexer {
       // --- Quote Block ---
       if (this.insideQuoteBlock) {
         if (trimmed === "{quote}") {
-          tokens.push({ kind: "blockquote", content: "" });
+          tokens.push({ kind: "blockquote_end" });
           this.insideQuoteBlock = false;
         } else {
-          tokens.push({ kind: "blockquote", content: line });
+          tokens.push({ kind: "blockquote_content", content: line });
         }
         continue;
       }
 
       if (trimmed === "{quote}") {
+        tokens.push({ kind: "blockquote_start" });
         this.insideQuoteBlock = true;
         continue;
       }
 
-      // --- bq. ショート記法 ---
+      // --- Short quote (bq.) ---
       const bqMatch = trimmed.match(/^bq\.\s+(.*)$/);
       if (bqMatch) {
         tokens.push({ kind: "blockquote", content: bqMatch[1] });

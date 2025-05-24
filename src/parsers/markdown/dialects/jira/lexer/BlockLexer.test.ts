@@ -20,16 +20,7 @@ describe("BlockLexer", () => {
     `;
 
     const tokens = runLexer(input);
-    expect(tokens).toMatchInlineSnapshot(
-      [
-        { kind: "heading", level: 1, content: "Heading 1" },
-        { kind: "blank_line" },
-        { kind: "paragraph", content: "This is a paragraph." },
-        { kind: "blank_line" },
-        { kind: "heading", level: 2, content: "Heading 2" },
-        { kind: "paragraph", content: "Another paragraph line." },
-      ],
-      `
+    expect(tokens).toMatchInlineSnapshot(`
       [
         {
           "content": "Heading 1",
@@ -56,8 +47,7 @@ describe("BlockLexer", () => {
           "kind": "paragraph",
         },
       ]
-    `,
-    );
+    `);
   });
 
   it("parses code blocks with and without language", () => {
@@ -73,18 +63,7 @@ describe("BlockLexer", () => {
     `;
 
     const tokens = runLexer(input);
-    expect(tokens).toMatchInlineSnapshot(
-      [
-        { kind: "code_block_start", language: "ts" },
-        { kind: "code_block_content", content: "const a = 1;" },
-        { kind: "code_block_content", content: "console.log(a);" },
-        { kind: "code_block_end" },
-        { kind: "blank_line" },
-        { kind: "code_block_start", language: null },
-        { kind: "code_block_content", content: "no lang" },
-        { kind: "code_block_end" },
-      ],
-      `
+    expect(tokens).toMatchInlineSnapshot(`
       [
         {
           "kind": "code_block_start",
@@ -116,36 +95,45 @@ describe("BlockLexer", () => {
           "kind": "code_block_end",
         },
       ]
-    `,
-    );
+    `);
   });
 
   it("parses quote blocks and bq. short syntax", () => {
     const input = dedent`
       {quote}
       This is a quote.
+      Spanning multiple lines.
+
+      And an empty line.
       {quote}
 
       bq. Short quote
     `;
 
     const tokens = runLexer(input);
-    expect(tokens).toMatchInlineSnapshot(
-      [
-        { kind: "blockquote", content: "This is a quote." },
-        { kind: "blockquote", content: "" },
-        { kind: "blank_line" },
-        { kind: "blockquote", content: "Short quote" },
-      ],
-      `
+    expect(tokens).toMatchInlineSnapshot(`
       [
         {
+          "kind": "blockquote_start",
+        },
+        {
           "content": "This is a quote.",
-          "kind": "blockquote",
+          "kind": "blockquote_content",
+        },
+        {
+          "content": "Spanning multiple lines.",
+          "kind": "blockquote_content",
         },
         {
           "content": "",
-          "kind": "blockquote",
+          "kind": "blockquote_content",
+        },
+        {
+          "content": "And an empty line.",
+          "kind": "blockquote_content",
+        },
+        {
+          "kind": "blockquote_end",
         },
         {
           "kind": "blank_line",
@@ -155,8 +143,7 @@ describe("BlockLexer", () => {
           "kind": "blockquote",
         },
       ]
-    `,
-    );
+    `);
   });
 
   it("parses list items with nesting", () => {
@@ -169,15 +156,7 @@ describe("BlockLexer", () => {
     `;
 
     const tokens = runLexer(input);
-    expect(tokens).toMatchInlineSnapshot(
-      [
-        { kind: "list_item", ordered: false, level: 1, content: "Item 1" },
-        { kind: "list_item", ordered: false, level: 2, content: "Subitem 1" },
-        { kind: "list_item", ordered: false, level: 2, content: "Subitem 2" },
-        { kind: "list_item", ordered: true, level: 1, content: "Numbered" },
-        { kind: "list_item", ordered: true, level: 2, content: "Numbered again" },
-      ],
-      `
+    expect(tokens).toMatchInlineSnapshot(`
       [
         {
           "content": "Item 1",
@@ -210,8 +189,7 @@ describe("BlockLexer", () => {
           "ordered": true,
         },
       ]
-    `,
-    );
+    `);
   });
 
   it("parses blank lines and fallback to paragraph", () => {
@@ -230,20 +208,7 @@ describe("BlockLexer", () => {
     `;
 
     const tokens = runLexer(input);
-    expect(tokens).toMatchInlineSnapshot(
-      [
-        { kind: "paragraph", content: "Just a paragraph." },
-        { kind: "blank_line" },
-        { kind: "list_item", ordered: false, level: 1, content: "List item" },
-        { kind: "blank_line" },
-        { kind: "code_block_start", language: null },
-        { kind: "code_block_content", content: "code" },
-        { kind: "code_block_end" },
-        { kind: "blank_line" },
-        { kind: "blockquote", content: "quoted" },
-        { kind: "blockquote", content: "" },
-      ],
-      `
+    expect(tokens).toMatchInlineSnapshot(`
       [
         {
           "content": "Just a paragraph.",
@@ -276,15 +241,16 @@ describe("BlockLexer", () => {
           "kind": "blank_line",
         },
         {
-          "content": "quoted",
-          "kind": "blockquote",
+          "kind": "blockquote_start",
         },
         {
-          "content": "",
-          "kind": "blockquote",
+          "content": "quoted",
+          "kind": "blockquote_content",
+        },
+        {
+          "kind": "blockquote_end",
         },
       ]
-    `,
-    );
+    `);
   });
 });

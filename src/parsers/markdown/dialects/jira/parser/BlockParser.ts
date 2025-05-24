@@ -36,7 +36,6 @@ export class BlockParser {
 
     while (!this.eof()) {
       const token = this.peek();
-
       if (!token) break;
 
       switch (token.kind) {
@@ -61,8 +60,18 @@ export class BlockParser {
           break;
         }
 
+        case "blockquote_start": {
+          nodes.push(this.parseBlockquoteBlock());
+          break;
+        }
+
         case "blockquote": {
-          nodes.push(...this.parseBlockquotes());
+          // bq. short blockquote
+          this.next();
+          const inlineTokens = new InlineLexer(token.content).tokenize();
+          const inlineNodes = new InlineParser(inlineTokens).parse();
+          const paragraph = createParagraphNode(token.content, inlineNodes);
+          nodes.push(createBlockquoteNode([paragraph]));
           break;
         }
 
@@ -111,6 +120,30 @@ export class BlockParser {
     return createCodeBlockNode(start.language, content);
   }
 
+  private parseBlockquoteBlock() {
+    this.next(); // consume blockquote_start
+    const lines: string[] = [];
+
+    while (!this.eof()) {
+      const token = this.peek();
+      if (!token) break;
+
+      if (token.kind === "blockquote_content") {
+        lines.push(token.content);
+        this.next();
+      } else if (token.kind === "blockquote_end") {
+        this.next();
+        break;
+      } else {
+        throw new Error(`Unexpected token in blockquote: ${JSON.stringify(token)}`);
+      }
+    }
+
+    const innerTokens = new BlockLexer(lines.join("\n")).tokenize();
+    const children = new BlockParser(innerTokens).parse();
+    return createBlockquoteNode(children);
+  }
+
   private parseList() {
     const items: ListItemNode[] = [];
 
@@ -123,26 +156,5 @@ export class BlockParser {
     }
 
     return createListNode(items);
-  }
-
-  private parseBlockquotes(): BlockNode[] {
-    const children: BlockNode[] = [];
-
-    while (!this.eof()) {
-      const token = this.peek();
-      if (token?.kind !== "blockquote") break;
-
-      this.next();
-      if (token.content === "") {
-        break; // 終端 `{quote}` ブロックの終わりを意味する
-      }
-
-      // 1行ごとに paragraph として扱い、中で InlineLexer する（後で attachInlineNodesToBlocks）
-      const paragraphTokens = new InlineLexer(token.content).tokenize();
-      const paragraphInline = new InlineParser(paragraphTokens).parse();
-      children.push(createParagraphNode(token.content, paragraphInline));
-    }
-
-    return [createBlockquoteNode(children)];
   }
 }
