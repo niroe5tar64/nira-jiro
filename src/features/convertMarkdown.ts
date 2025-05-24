@@ -4,16 +4,14 @@ import {
   parseJiraMarkdown,
   renderStandardMarkdown,
   renderJiraMarkdown,
-  renderHtml,
-} from "../parsers/markdown_old";
+} from "../parsers/markdown";
 
-type MarkdownFlavor = "standard" | "jira";
-type DocumentFormat = MarkdownFlavor | "html";
+type MarkdownDialects = "standard" | "jira";
 
 interface ConvertMarkdownArgs {
   source: string;
-  from: MarkdownFlavor;
-  to: MarkdownFlavor;
+  from: MarkdownDialects;
+  to: MarkdownDialects;
 }
 
 export function convertMarkdown(args: ConvertMarkdownArgs) {
@@ -23,13 +21,12 @@ export function convertMarkdown(args: ConvertMarkdownArgs) {
   return renderers[to](astNodes);
 }
 
-const parsers: Record<MarkdownFlavor, (source: string) => MarkdownBlockNode[]> = {
+const parsers: Record<MarkdownDialects, (source: string) => MarkdownBlockNode[]> = {
   standard: parseStandardMarkdown,
   jira: parseJiraMarkdown,
 };
 
-const renderers: Record<DocumentFormat, (astNodes: MarkdownBlockNode[]) => string> = {
+const renderers: Record<MarkdownDialects, (astNodes: MarkdownBlockNode[]) => string> = {
   standard: renderStandardMarkdown,
   jira: renderJiraMarkdown,
-  html: renderHtml,
 };
