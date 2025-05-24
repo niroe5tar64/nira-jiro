@@ -30,12 +30,8 @@ export class StandardMarkdownRendererVisitor extends AbstractMarkdownNodeVisitor
 
   protected visitBlockquote(node: BlockquoteNode): string {
     return node.children
-      .map((child) =>
-        this.visitBlock(child)
-          .split("\n")
-          .map((line) => `> ${line}`)
-          .join("\n"),
-      )
+      .map((child) => this.visitBlock(child))
+      .map((line) => `> ${line}`)
       .join("\n");
   }
 
