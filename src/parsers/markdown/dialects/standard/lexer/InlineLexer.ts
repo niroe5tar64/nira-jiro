@@ -12,7 +12,7 @@ export class InlineLexer {
     const tokens: InlineToken[] = [];
     const remaining = this.source;
 
-    const regex = /(\*\*(.+?)\*\*|\*(.+?)\*)/g;
+    const regex = /(\*\*([^*]+)\*\*|\*([^*]+)\*)/g;
     let match: RegExpExecArray | null;
     let lastIndex = 0;
 
