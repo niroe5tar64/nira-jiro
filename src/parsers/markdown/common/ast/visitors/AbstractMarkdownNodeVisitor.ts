@@ -1,13 +1,13 @@
 import type {
   BlankLineNode,
-  ParagraphNode,
-  HeadingNode,
-  BlockquoteNode,
-  ListNode,
-  CodeBlockNode,
   BlockNode,
+  BlockquoteNode,
+  CodeBlockNode,
+  HeadingNode,
+  ListNode,
+  ParagraphNode,
 } from "../block";
-import type { TextNode, EmphasisNode, StrongNode, InlineNode } from "../inline";
+import type { EmphasisNode, InlineNode, StrongNode, TextNode } from "../inline";
 
 export abstract class AbstractMarkdownNodeVisitor<T> {
   // エントリポイント：BlockNode配列を処理する

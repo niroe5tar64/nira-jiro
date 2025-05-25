@@ -1,6 +1,6 @@
-import { handleModeSwitch } from "~/features";
-import { getActiveFormElement, observeRichFormChanges, mountTemplateTool } from "~/dom";
+import { getActiveFormElement, mountTemplateTool, observeRichFormChanges } from "~/dom";
 import type { InputMode, RichFormType } from "~/dom";
+import { handleModeSwitch } from "~/features";
 
 export function setupMutationObserver() {
   const lastModes: Record<RichFormType, InputMode | null> = { description: null, addComment: null };

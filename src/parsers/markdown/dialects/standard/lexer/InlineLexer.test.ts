@@ -1,8 +1,8 @@
-import { describe, it, expect } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import dedent from "dedent";
 
-import { InlineLexer } from "./InlineLexer";
 import type { InlineToken } from "../../../common/tokens/inline";
+import { InlineLexer } from "./InlineLexer";
 
 function tokenize(source: string): InlineToken[] {
   return new InlineLexer(source).tokenize();

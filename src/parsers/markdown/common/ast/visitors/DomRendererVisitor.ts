@@ -1,14 +1,14 @@
-import { AbstractMarkdownNodeVisitor } from "./AbstractMarkdownNodeVisitor";
 import type {
-  BlockNode,
-  ParagraphNode,
-  HeadingNode,
-  BlockquoteNode,
-  ListNode,
-  CodeBlockNode,
   BlankLineNode,
+  BlockNode,
+  BlockquoteNode,
+  CodeBlockNode,
+  HeadingNode,
+  ListNode,
+  ParagraphNode,
 } from "../block";
-import type { TextNode, EmphasisNode, StrongNode } from "../inline";
+import type { EmphasisNode, StrongNode, TextNode } from "../inline";
+import { AbstractMarkdownNodeVisitor } from "./AbstractMarkdownNodeVisitor";
 
 export class DomRendererVisitor extends AbstractMarkdownNodeVisitor<Node> {
   render(nodes: BlockNode[]): DocumentFragment {

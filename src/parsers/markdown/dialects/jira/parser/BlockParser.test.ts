@@ -1,9 +1,9 @@
-import { describe, it, expect } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import dedent from "dedent";
 
+import type { BlockNode } from "../../../common/ast/block";
 import { BlockLexer } from "../lexer/BlockLexer";
 import { BlockParser } from "./BlockParser";
-import type { BlockNode } from "../../../common/ast/block";
 
 function parseToAst(markdown: string): BlockNode[] {
   const tokens = new BlockLexer(markdown).tokenize();

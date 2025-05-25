@@ -1,6 +1,6 @@
-import type { InlineToken } from "../../../common/tokens/inline";
 import type { InlineNode } from "../../../common/ast/inline";
-import { createTextNode, createStrongNode, createEmphasisNode } from "../../../common/ast/inline";
+import { createEmphasisNode, createStrongNode, createTextNode } from "../../../common/ast/inline";
+import type { InlineToken } from "../../../common/tokens/inline";
 
 export class InlineParser {
   constructor(private tokens: InlineToken[]) {}

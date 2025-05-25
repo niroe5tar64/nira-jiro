@@ -1,18 +1,18 @@
-import type { BlockToken } from "../../../common/tokens/block";
 import type { BlockNode, ListItemNode } from "../../../common/ast/block";
+import type { BlockToken } from "../../../common/tokens/block";
 import { InlineLexer } from "../lexer/InlineLexer";
 import { InlineParser } from "./InlineParser";
 
 import {
-  createHeadingNode,
-  createParagraphNode,
-  createCodeBlockNode,
   createBlockquoteNode,
-  createListNode,
+  createCodeBlockNode,
+  createHeadingNode,
   createListItemNode,
+  createListNode,
+  createParagraphNode,
 } from "../../../common/ast/block";
-import { BlockLexer } from "../lexer/BlockLexer";
 import { attachInlineNodesToBlocks } from "../../../common/ast/helpers/attachInlineNodesToBlocks";
+import { BlockLexer } from "../lexer/BlockLexer";
 
 export class BlockParser {
   private index = 0;

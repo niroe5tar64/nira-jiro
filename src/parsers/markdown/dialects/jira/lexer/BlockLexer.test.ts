@@ -1,7 +1,7 @@
-import { describe, it, expect } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import dedent from "dedent";
-import { BlockLexer } from "./BlockLexer";
 import type { BlockToken } from "../../../common/tokens/block";
+import { BlockLexer } from "./BlockLexer";
 
 function runLexer(source: string): BlockToken[] {
   const lexer = new BlockLexer(source);

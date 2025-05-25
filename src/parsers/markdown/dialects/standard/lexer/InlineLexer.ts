@@ -1,8 +1,8 @@
 import type { InlineToken } from "../../../common/tokens/inline";
 import {
-  createTextToken,
-  createStrongToken,
   createEmphasisToken,
+  createStrongToken,
+  createTextToken,
 } from "../../../common/tokens/inline";
 
 export class InlineLexer {

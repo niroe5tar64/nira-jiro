@@ -1,5 +1,5 @@
-import { standardMarkdownTexts, jiraMarkdownTexts } from "../utils/sampleTexts";
 import { convertMarkdown } from "~/features";
+import { jiraMarkdownTexts, standardMarkdownTexts } from "../utils/sampleTexts";
 
 export function DebugMarkdown() {
   return (

@@ -1,8 +1,8 @@
-import { describe, it, expect } from "bun:test";
+import { describe, expect, it } from "bun:test";
 
+import type { InlineNode } from "../../../common/ast/inline";
 import { InlineLexer } from "../lexer/InlineLexer";
 import { InlineParser } from "./InlineParser";
-import type { InlineNode } from "../../../common/ast/inline";
 
 function parseInline(input: string): InlineNode[] {
   const tokens = new InlineLexer(input).tokenize();

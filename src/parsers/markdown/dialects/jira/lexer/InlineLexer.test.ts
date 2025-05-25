@@ -1,6 +1,6 @@
-import { describe, it, expect } from "bun:test";
-import { InlineLexer } from "./InlineLexer";
+import { describe, expect, it } from "bun:test";
 import type { InlineToken } from "../../../common/tokens/inline";
+import { InlineLexer } from "./InlineLexer";
 
 function runLexer(source: string): InlineToken[] {
   const lexer = new InlineLexer(source);

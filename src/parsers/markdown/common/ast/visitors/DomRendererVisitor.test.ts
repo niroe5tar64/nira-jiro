@@ -1,6 +1,6 @@
-import { JSDOM } from "jsdom";
-import { describe, it, expect, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, it } from "bun:test";
 import dedent from "dedent";
+import { JSDOM } from "jsdom";
 
 import { BlockLexer } from "../../../dialects/standard/lexer/BlockLexer";
 import { BlockParser } from "../../../dialects/standard/parser/BlockParser";

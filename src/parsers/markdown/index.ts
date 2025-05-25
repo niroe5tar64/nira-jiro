@@ -1,21 +1,16 @@
 import type { BlockNode as MarkdownBlockNode } from "./common/ast/block";
 export type { MarkdownBlockNode };
 
-// Dialects
-import { BlockLexer as StandardBlockLexer } from "./dialects/standard/lexer/BlockLexer";
-import { BlockParser as StandardBlockParser } from "./dialects/standard/parser/BlockParser";
+import { attachInlineNodesToBlocks } from "./common/ast/helpers/attachInlineNodesToBlocks";
+import { DomRendererVisitor } from "./common/ast/visitors/DomRendererVisitor";
 import { BlockLexer as JiraBlockLexer } from "./dialects/jira/lexer/BlockLexer";
 import { BlockParser as JiraBlockParser } from "./dialects/jira/parser/BlockParser";
-
-// Visitors
-import { StandardMarkdownRendererVisitor } from "./dialects/standard/visitors/StandardMarkdownRendererVisitor";
 import { JiraMarkdownRendererVisitor } from "./dialects/jira/visitors/JiraMarkdownRendererVisitor";
-import { DomRendererVisitor } from "./common/ast/visitors/DomRendererVisitor";
-
-// Inline support
+import { BlockLexer as StandardBlockLexer } from "./dialects/standard/lexer/BlockLexer";
 import { InlineLexer } from "./dialects/standard/lexer/InlineLexer";
+import { BlockParser as StandardBlockParser } from "./dialects/standard/parser/BlockParser";
 import { InlineParser } from "./dialects/standard/parser/InlineParser";
-import { attachInlineNodesToBlocks } from "./common/ast/helpers/attachInlineNodesToBlocks";
+import { StandardMarkdownRendererVisitor } from "./dialects/standard/visitors/StandardMarkdownRendererVisitor";
 
 function attachInline(ast: MarkdownBlockNode[]): MarkdownBlockNode[] {
   return attachInlineNodesToBlocks(ast, (text) => {

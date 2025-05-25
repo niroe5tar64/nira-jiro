@@ -1,5 +1,5 @@
-import type { BlockNodeBase } from "./BlockNodeBase";
 import type { InlineNode } from "../inline";
+import type { BlockNodeBase } from "./BlockNodeBase";
 
 export interface ParagraphNode extends BlockNodeBase {
   kind: "paragraph";
