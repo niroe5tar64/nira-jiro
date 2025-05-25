@@ -1,43 +1,65 @@
-// 1. 型（必要なら）
-import type { MarkdownBlockNode } from "./common/ast/nodes";
+import type { BlockNode as MarkdownBlockNode } from "./common/ast/block";
 export type { MarkdownBlockNode };
 
-// 2. パース関数
-import { StandardLexer } from "./standard/lexer";
-import { StandardParser } from "./standard/parser";
-import { JiraLexer } from "./jira/lexer";
-import { JiraParser } from "./jira/parser";
+// Dialects
+import { BlockLexer as StandardBlockLexer } from "./dialects/standard/lexer/BlockLexer";
+import { BlockParser as StandardBlockParser } from "./dialects/standard/parser/BlockParser";
+import { BlockLexer as JiraBlockLexer } from "./dialects/jira/lexer/BlockLexer";
+import { BlockParser as JiraBlockParser } from "./dialects/jira/parser/BlockParser";
 
+// Visitors
+import { StandardMarkdownRendererVisitor } from "./dialects/standard/visitors/StandardMarkdownRendererVisitor";
+import { JiraMarkdownRendererVisitor } from "./dialects/jira/visitors/JiraMarkdownRendererVisitor";
+import { DomRendererVisitor } from "./common/ast/visitors/DomRendererVisitor";
+
+// Inline support
+import { InlineLexer } from "./dialects/standard/lexer/InlineLexer";
+import { InlineParser } from "./dialects/standard/parser/InlineParser";
+import { attachInlineNodesToBlocks } from "./common/ast/helpers/attachInlineNodesToBlocks";
+
+function attachInline(ast: MarkdownBlockNode[]): MarkdownBlockNode[] {
+  return attachInlineNodesToBlocks(ast, (text) => {
+    const inlineTokens = new InlineLexer(text).tokenize();
+    return new InlineParser(inlineTokens).parse();
+  });
+}
+
+// === Parse ===
 export function parseStandardMarkdown(source: string): MarkdownBlockNode[] {
-  const tokens = new StandardLexer(source).tokenize();
-  return new StandardParser(tokens).build();
+  const tokens = new StandardBlockLexer(source).tokenize();
+  const ast = new StandardBlockParser(tokens).parse();
+  return attachInline(ast);
 }
 
 export function parseJiraMarkdown(source: string): MarkdownBlockNode[] {
-  const tokens = new JiraLexer(source).tokenize();
-  return new JiraParser(tokens).build();
+  const tokens = new JiraBlockLexer(source).tokenize();
+  const ast = new JiraBlockParser(tokens).parse();
+  return attachInline(ast);
 }
 
-// 3. Markdown出力（Visitor）
-import { StandardMarkdownRendererVisitor } from "./standard/visitors";
-import { JiraMarkdownRendererVisitor } from "./jira/visitors";
-import { HtmlRendererVisitor } from "./common/ast/visitors";
-
+// === Render ===
 export function renderStandardMarkdown(ast: MarkdownBlockNode[]): string {
   const visitor = new StandardMarkdownRendererVisitor();
-  return ast.map((node) => node.accept(visitor)).join("");
+  return visitor.render(ast);
 }
 
 export function renderJiraMarkdown(ast: MarkdownBlockNode[]): string {
   const visitor = new JiraMarkdownRendererVisitor();
-  return ast.map((node) => node.accept(visitor)).join("");
+  return visitor.render(ast);
 }
 
-export function renderHtml(ast: MarkdownBlockNode[]): string {
-  const visitor = new HtmlRendererVisitor();
-  return ast.map((node) => node.accept(visitor)).join("");
+export function renderDomNode(ast: MarkdownBlockNode[]): DocumentFragment {
+  const visitor = new DomRendererVisitor();
+  return visitor.render(ast);
 }
 
-// 4. シリアライズ系
-export { serializeAst } from "./common/serializeAst";
-export { deserializeAst } from "./common/deserializeAst";
+// === Serialize / Deserialize ===
+export function serializeAst(ast: MarkdownBlockNode[]): MarkdownBlockNode[] {
+  // MarkdownBlockNode は Pure Object なので、ASTをそのまま利用可能。
+  return ast;
+}
+
+export function deserializeAst(json: unknown): MarkdownBlockNode[] {
+  // JSONをASTに変換する関数だが Pure Object なので、キャストするだけでOK
+  return json as MarkdownBlockNode[];
+}
