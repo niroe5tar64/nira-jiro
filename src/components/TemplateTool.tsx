@@ -20,10 +20,14 @@ export function TemplateTool() {
     }
 
     const original = textarea.value;
-    const converted = toggleMarkdownFormat(original);
-    textarea.value = converted;
 
-    console.info("✅ Markdown変換完了");
+    try {
+      textarea.value = toggleMarkdownFormat(original);
+      console.info("✅ Markdown変換完了");
+    } catch (error) {
+      console.error(error);
+      alert("エラーになってしまいました・・・");
+    }
   };
 
   const handleClick = (event: MouseEvent, action: "standardToJira" | "jiraToStandard") => {
