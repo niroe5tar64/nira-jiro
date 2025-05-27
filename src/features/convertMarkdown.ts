@@ -1,6 +1,7 @@
 import {
   type MarkdownBlockNode,
   type MarkdownDialects,
+  detectFormat,
   parseJiraMarkdown,
   parseStandardMarkdown,
   renderJiraMarkdown,
@@ -13,7 +14,7 @@ interface ConvertMarkdownArgs {
   to: MarkdownDialects;
 }
 
-export function convertMarkdown(args: ConvertMarkdownArgs) {
+export function convertMarkdown(args: ConvertMarkdownArgs): string {
   const { source, from, to } = args;
 
   const astNodes = parsers[from](source);
@@ -29,3 +30,10 @@ const renderers: Record<MarkdownDialects, (astNodes: MarkdownBlockNode[]) => str
   standard: renderStandardMarkdown,
   jira: renderJiraMarkdown,
 };
+
+export function toggleMarkdownFormat(source: string): string {
+  const from = detectFormat(source);
+  const to = from === "standard" ? "jira" : "standard";
+
+  return convertMarkdown({ source, from, to });
+}
