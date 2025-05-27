@@ -1,12 +1,11 @@
 import {
   type MarkdownBlockNode,
+  type MarkdownDialects,
   parseJiraMarkdown,
   parseStandardMarkdown,
   renderJiraMarkdown,
   renderStandardMarkdown,
 } from "../parsers/markdown";
-
-type MarkdownDialects = "standard" | "jira";
 
 interface ConvertMarkdownArgs {
   source: string;
