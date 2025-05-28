@@ -1,3 +1,13 @@
+.wiki-edit-toolbar div.aui-buttons.additional-tool .wiki-edit-operation-markdown {
+  z-index: 1;
+}
+.wiki-edit-toolbar div.aui-buttons.additional-tool .aui-button.wiki-edit-operation-markdown:focus {
+  background-color: unset;
+}
+.wiki-edit-toolbar div.aui-buttons.additional-tool .aui-button.wiki-edit-operation-markdown:hover {
+  background-color: var(--aui-btn-bg);
+}
+
 .wiki-edit-toolbar div.aui-buttons.template-tool .wiki-edit-operation-template {
   width: 68px;
   margin-right: -68px;
