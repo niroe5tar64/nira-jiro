@@ -11,10 +11,20 @@ export function setupMutationObserver() {
       const activeForm = getActiveFormElement(type);
       if (activeForm) {
         mountAdditionalTools(activeForm, type);
-        lastModes[type] = handleModeSwitch(type, lastModes[type]);
+        lastModes[type] = handleModeSwitch(type, lastModes[type], (newMode) =>
+          switchButtonStatus(activeForm, newMode),
+        );
       } else {
         lastModes[type] = null;
       }
     });
   });
+}
+
+function switchButtonStatus(activeForm: Element, newMode: InputMode) {
+  const markdownButton = activeForm.querySelector(".wiki-edit-operation-markdown");
+  if (!(markdownButton instanceof HTMLButtonElement)) {
+    return;
+  }
+  markdownButton.disabled = newMode !== "markdown";
 }
