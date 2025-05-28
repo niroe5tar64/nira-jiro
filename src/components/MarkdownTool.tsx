@@ -3,9 +3,9 @@
 import { toggleMarkdownFormat } from "~/features";
 
 export function MarkdownTool() {
-  // let dropdownTriggerRef: HTMLAnchorElement | undefined;
+  // let dropdownTriggerRef: HTMLButtonElement | undefined;
 
-  // const setDropdownTrigger = (el: HTMLAnchorElement) => {
+  // const setDropdownTrigger = (el: HTMLButtonElement) => {
   //   dropdownTriggerRef = el;
   // };
 
@@ -57,9 +57,8 @@ export function MarkdownTool() {
 
   return (
     <>
-      {/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
-      <a
-        href="#"
+      <button
+        type="button"
         class="aui-button aui-button-subtle wiki-edit-operation wiki-edit-operation-markdown"
         onClick={(event) =>
           handleClick(event, (textarea) => {
@@ -69,74 +68,73 @@ export function MarkdownTool() {
         }
       >
         <span class="aui-icon aui-icon-small aui-iconfont-refresh">Markdown 変換</span>
-      </a>
+      </button>
 
-      {/* <a
-          // biome-ignore lint/a11y/useValidAnchor: <explanation>
-          href="#"
-          ref={setDropdownTrigger}
-          class="aui-button aui-button-subtle aui-dropdown2-trigger wiki-edit-operation-dropdown wiki-edit-markdown-trigger"
-          aria-controls="wiki-edit-dropdown"
-          aria-haspopup="true"
-          data-dropdown-id="wiki-edit-dropdown"
-          aria-expanded="false"
-          aria-describedby="aui-tooltip"
-        >
-          <span class="visually-hidden">Markdown 詳細指定</span>
-        </a>
+      {/* <button
+        ref={setDropdownTrigger}
+        type="button"
+        class="aui-button aui-button-subtle aui-dropdown2-trigger wiki-edit-operation-dropdown wiki-edit-markdown-trigger"
+        aria-controls="wiki-edit-dropdown"
+        aria-haspopup="true"
+        data-dropdown-id="wiki-edit-dropdown"
+        aria-expanded="false"
+        aria-describedby="aui-tooltip"
+      >
+        <span class="visually-hidden">Markdown 詳細指定</span>
+      </button>
 
-        <div
-          id="wiki-edit-dropdown"
-          class="aui-dropdown2 aui-style-default wiki-edit-dropdown aui-layer aui-alignment-side-bottom aui-alignment-snap-auto"
-          style="z-index: 3000; margin: 0px; position: absolute;"
-          data-aui-alignment="bottom auto"
-          data-aui-alignment-static="true"
-          x-placement="bottom-end"
-          data-popper-placement="bottom-end"
-        >
-          <div class="aui-dropdown2-section">
-            <ul class="aui-list-truncate">
-              <li>
-                <button
-                  type="button"
-                  class="wiki-edit-operation"
-                  tabindex="-1"
-                  onclick={(e) =>
-                    handleClick(e, (textarea) => {
-                      const original = textarea.value;
-                      textarea.value = convertMarkdown({
-                        source: original,
-                        from: "standard",
-                        to: "jira",
-                      });
-                    })
-                  }
-                >
-                  標準 Markdown → Jira Markdown
-                </button>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  class="wiki-edit-operation"
-                  tabindex="-1"
-                  onclick={(e) =>
-                    handleClick(e, (textarea) => {
-                      const original = textarea.value;
-                      textarea.value = convertMarkdown({
-                        source: original,
-                        from: "jira",
-                        to: "standard",
-                      });
-                    })
-                  }
-                >
-                  Jira Markdown → 標準 Markdown
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div> */}
+      <div
+        id="wiki-edit-dropdown"
+        class="aui-dropdown2 aui-style-default wiki-edit-dropdown aui-layer aui-alignment-side-bottom aui-alignment-snap-auto"
+        style="z-index: 3000; margin: 0px; position: absolute;"
+        data-aui-alignment="bottom auto"
+        data-aui-alignment-static="true"
+        x-placement="bottom-end"
+        data-popper-placement="bottom-end"
+      >
+        <div class="aui-dropdown2-section">
+          <ul class="aui-list-truncate">
+            <li>
+              <button
+                type="button"
+                class="wiki-edit-operation"
+                tabindex="-1"
+                onclick={(e) =>
+                  handleClick(e, (textarea) => {
+                    const original = textarea.value;
+                    textarea.value = convertMarkdown({
+                      source: original,
+                      from: "standard",
+                      to: "jira",
+                    });
+                  })
+                }
+              >
+                標準 Markdown → Jira Markdown
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="wiki-edit-operation"
+                tabindex="-1"
+                onclick={(e) =>
+                  handleClick(e, (textarea) => {
+                    const original = textarea.value;
+                    textarea.value = convertMarkdown({
+                      source: original,
+                      from: "jira",
+                      to: "standard",
+                    });
+                  })
+                }
+              >
+                Jira Markdown → 標準 Markdown
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div> */}
     </>
   );
 }
