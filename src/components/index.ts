@@ -1,2 +1,2 @@
 export * from "./PopupApp";
-export * from "./TemplateTool";
+export * from "./AdditionalTools";

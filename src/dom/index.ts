@@ -1,3 +1,3 @@
 export * from "./observeRichForm";
-export * from "./mountTemplateTool";
+export * from "./mountAdditionalTools";
 export * from "./operations";

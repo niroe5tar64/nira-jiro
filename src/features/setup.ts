@@ -1,4 +1,4 @@
-import { getActiveFormElement, mountTemplateTool, observeRichFormChanges } from "~/dom";
+import { getActiveFormElement, mountAdditionalTools, observeRichFormChanges } from "~/dom";
 import type { InputMode, RichFormType } from "~/dom";
 import { handleModeSwitch } from "~/features";
 
@@ -10,7 +10,7 @@ export function setupMutationObserver() {
     targetRichFormTypes.map((type) => {
       const activeForm = getActiveFormElement(type);
       if (activeForm) {
-        mountTemplateTool(activeForm, type);
+        mountAdditionalTools(activeForm, type);
         lastModes[type] = handleModeSwitch(type, lastModes[type]);
       } else {
         lastModes[type] = null;
