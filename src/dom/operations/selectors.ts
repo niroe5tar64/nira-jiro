@@ -1,4 +1,4 @@
-export type RichFormType = "description" | "addComment";
+export type RichFormType = "description" | "addComment" | "editComment" | "dialogComment";
 export type InputMode = "markdown" | "wysiwyg";
 
 type FormSection = {
@@ -16,6 +16,16 @@ export const QUERY_SELECTORS: Record<RichFormType, FormSection> = {
   addComment: {
     activeForm: "#addcomment.active",
     textArea: "#comment",
+    toolbar: ".wiki-edit-toolbar .aui-toolbar2-inner > .aui-toolbar2-primary",
+  },
+  editComment: {
+    activeForm: "#comment-edit",
+    textArea: "#comment-wiki-edit .textarea.long-field",
+    toolbar: ".wiki-edit-toolbar .aui-toolbar2-inner > .aui-toolbar2-primary",
+  },
+  dialogComment: {
+    activeForm: "#dialog-form",
+    textArea: "#comment-wiki-edit .textarea.long-field",
     toolbar: ".wiki-edit-toolbar .aui-toolbar2-inner > .aui-toolbar2-primary",
   },
 };

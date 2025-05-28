@@ -3,10 +3,20 @@ import type { InputMode, RichFormType } from "~/dom";
 import { handleModeSwitch } from "~/features";
 
 export function setupMutationObserver() {
-  const lastModes: Record<RichFormType, InputMode | null> = { description: null, addComment: null };
+  const lastModes: Record<RichFormType, InputMode | null> = {
+    description: null,
+    addComment: null,
+    editComment: null,
+    dialogComment: null,
+  };
 
   observeRichFormChanges(() => {
-    const targetRichFormTypes: RichFormType[] = ["description", "addComment"];
+    const targetRichFormTypes: RichFormType[] = [
+      "description",
+      "addComment",
+      "editComment",
+      "dialogComment",
+    ];
     targetRichFormTypes.map((type) => {
       const activeForm = getActiveFormElement(type);
       if (activeForm) {
