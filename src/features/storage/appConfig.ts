@@ -13,11 +13,11 @@ async function setStorageAppConfig(items: Partial<AppConfig>) {
   await chrome.storage.local.set(items);
 }
 
-export async function getMarkdownConversionEnabled(): Promise<boolean> {
+export async function getStoredMarkdownConversionEnabled(): Promise<boolean> {
   const markdownConversionEnabled = await getStorageAppConfig("markdownConversionEnabled");
   return markdownConversionEnabled ?? false;
 }
 
-export async function setMarkdownConversionEnabled(enabled: boolean): Promise<void> {
+export async function setStoredMarkdownConversionEnabled(enabled: boolean): Promise<void> {
   setStorageAppConfig({ markdownConversionEnabled: enabled });
 }

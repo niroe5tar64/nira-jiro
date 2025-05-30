@@ -1,4 +1,10 @@
-import { setupMutationObserver } from "~/features";
+import { getStoredMarkdownConversionEnabled, setupMutationObserver } from "~/features";
 
-// 起動
-setupMutationObserver();
+(async () => {
+  const enabled = await getStoredMarkdownConversionEnabled();
+  if (!enabled) {
+    return;
+  }
+  // 起動
+  setupMutationObserver();
+})();
