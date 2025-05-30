@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "韮次郎 - Jira拡張機能",
-  "version": "1.0",
-  "description": "Jiraにテンプレートや記法変換を追加する拡張機能「韮次郎」",
+  "version": "0.1.0",
+  "description": "Jiraにちょっとした機能を追加する拡張機能「韮次郎」",
   "permissions": ["storage"],
   "icons": {
     "16": "icons/icon-16.png",

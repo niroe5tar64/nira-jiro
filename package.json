@@ -1,5 +1,7 @@
 {
   "name": "nira-jiro",
+  "version": "0.1.0",
+  "lastUpdated": "2025-05-30",
   "module": "index.ts",
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
