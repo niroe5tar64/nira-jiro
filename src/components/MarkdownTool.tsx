@@ -67,7 +67,7 @@ export function MarkdownTool() {
           })
         }
       >
-        <span class="aui-icon aui-icon-small aui-iconfont-refresh">Markdown 変換</span>
+        <span>MD</span>
       </button>
 
       {/* <button
