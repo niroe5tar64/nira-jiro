@@ -7,7 +7,7 @@ export default defineConfig(() => {
     build: {
       outDir: "dist",
       rollupOptions: {
-        input: { popup: path.resolve(__dirname, "src/extension/popup.ts") },
+        input: { options: path.resolve(__dirname, "src/extension/options.ts") },
         output: {
           entryFileNames: "[name].js",
           assetFileNames: "[name].css",

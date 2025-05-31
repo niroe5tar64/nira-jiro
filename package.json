@@ -24,8 +24,11 @@
   },
   "private": true,
   "scripts": {
-    "dev": "vite --config vite.config.popup.ts",
-    "build": "vite build --config vite.config.content.ts && vite build --config vite.config.popup.ts",
+    "dev": "vite --config vite.config.options.ts",
+    "build": "bun run build:content && bun run build:options && bun run build:popup",
+    "build:content": "vite build --config vite.config.content.ts",
+    "build:options": "vite build --config vite.config.options.ts",
+    "build:popup": "vite build --config vite.config.popup.ts",
     "format": "biome format . --write",
     "format:check": "biome format . --skip-errors",
     "lint": "biome check .",
