@@ -1,4 +1,5 @@
 import { createSignal, onCleanup } from "solid-js";
+import { TemplateForm } from "./TemplateForm";
 
 export function OptionsPage() {
   // 左右の幅（%）を管理
@@ -57,7 +58,9 @@ export function OptionsPage() {
         />
         {/* 右側エリア */}
         <div class="flex-1 h-full overflow-auto" style={{ width: `${100 - leftWidth()}%` }}>
-          <div class="p-4">右側エリア</div>
+          <div class="p-4 flex flex-col h-full min-h-0">
+            <TemplateForm initialTemplate={{ title: "", body: "" }} onSave={() => {}} />
+          </div>
         </div>
       </div>
     </div>
