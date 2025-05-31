@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import "./aui.css";
+import "../aui.css";
 import { getActiveFormElement } from "~/dom";
 import { convertMarkdown, toggleMarkdownFormat } from "~/features";
 

@@ -1,7 +1,6 @@
-// import { MarkdownTool } from "./MarkdownTool";
 import { MarkdownTool } from "./MarkdownTool";
 import { TemplateTool } from "./TemplateTool";
-import "./aui.css";
+import "../aui.css";
 
 export function AdditionalTools() {
   return (

@@ -1,7 +1,7 @@
 import { useMarkdownConversionEnabled } from "~/hooks";
 
 // @ts-ignore
-import pkg from "../../package.json";
+import pkg from "../../../package.json";
 
 export function PopupApp() {
   const { markdownConversionEnabled, handleToggle } = useMarkdownConversionEnabled();
@@ -22,26 +22,25 @@ export function PopupApp() {
       </div>
       <hr />
       <div class="px-4 py-2">
-        <label class="flex items-center gap-2 text-xs">
+        <label class="flex items-center gap-2 text-xs cursor-pointer">
           <input
             type="checkbox"
+            class="accent-blue-500 cursor-pointer"
             checked={markdownConversionEnabled()}
             onChange={handleToggle}
-            class="accent-blue-500"
           />
           Markdown変換を有効にする
         </label>
       </div>
-      {/* <div class="px-4 py-2 border-t text-xs">
-        <a
-          href="chrome://extensions/"
-          class="text-blue-500 hover:underline"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div class="px-4 py-2 border-t text-xs">
+        <button
+          type="button"
+          class="text-blue-500 hover:underline cursor-pointer"
+          onClick={() => chrome.runtime.openOptionsPage()}
         >
-          拡張機能を管理
-        </a>
-      </div> */}
+          設定を開く
+        </button>
+      </div>
     </div>
   );
 }
