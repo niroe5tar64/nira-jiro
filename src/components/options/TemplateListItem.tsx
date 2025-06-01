@@ -1,6 +1,7 @@
 import type { JSX } from "solid-js";
 import type { Template } from "./TemplateList";
 import { DragHandleIcon } from "./DragHandleIcon";
+import { DeleteIcon } from "./DeleteIcon";
 
 export type TemplateListItemProps = {
   template: Template;
@@ -14,6 +15,7 @@ export type TemplateListItemProps = {
   onDrop: (e: DragEvent) => void;
   onDragEnd: () => void;
   onDragLeave: (e: DragEvent) => void;
+  onDelete: (e: MouseEvent) => void;
 };
 
 export function TemplateListItem(props: TemplateListItemProps): JSX.Element {
@@ -32,7 +34,7 @@ export function TemplateListItem(props: TemplateListItemProps): JSX.Element {
         </div>
       )}
       <div
-        class={`flex items-center w-full text-left p-1 rounded transition-colors text-sm font-medium focus:bg-green-200 ${props.selected ? "bg-green-200 text-green-900 font-bold" : "hover:bg-green-100 text-green-800"}`}
+        class={`flex items-center w-full text-left p-1 rounded transition-colors text-sm font-medium ${props.selected ? "bg-green-200 text-green-900 font-bold" : "hover:bg-green-100 text-green-800"}`}
       >
         <span
           class="mr-1 px-1 py-2 text-green-700 cursor-grab active:cursor-grabbing rounded flex-shrink-0"
@@ -53,6 +55,15 @@ export function TemplateListItem(props: TemplateListItemProps): JSX.Element {
           tabIndex={0}
         >
           {props.template.title}
+        </button>
+        <button
+          type="button"
+          class={`ml-2 p-1 rounded-full cursor-pointer focus:outline-none ${props.selected ? "hover:bg-green-300 text-green-900" : "hover:bg-green-300 text-green-800"}`}
+          aria-label="テンプレート削除"
+          tabIndex={0}
+          onClick={props.onDelete}
+        >
+          <DeleteIcon />
         </button>
       </div>
       {/* 挿入線（下） */}

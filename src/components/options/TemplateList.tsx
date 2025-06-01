@@ -27,6 +27,10 @@ export function TemplateList(props: TemplateListProps): JSX.Element {
     resetDnD,
   } = useTemplateListDnD(props.templates, props.onReorder);
 
+  const handleDelete = (id: string) => (_e: MouseEvent) => {
+    console.log("削除イベント実行", id);
+  };
+
   return (
     <div class="p-1 h-full" onDragOver={(e) => e.preventDefault()} onDrop={handleDropOutside}>
       <div class="text-xs text-green-900 font-bold mb-2 pl-1 tracking-wide">テンプレート一覧</div>
@@ -45,6 +49,7 @@ export function TemplateList(props: TemplateListProps): JSX.Element {
               onDrop={handleDrop(template.id)}
               onDragEnd={resetDnD}
               onDragLeave={handleDragLeave(template.id)}
+              onDelete={handleDelete(template.id)}
             />
           )}
         </For>
