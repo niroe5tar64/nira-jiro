@@ -19,11 +19,11 @@ export function TemplateListItem(props: TemplateListItemProps): JSX.Element {
   return (
     <li
       draggable="true"
-      onDragStart={(e) => props.onDragStart(e as DragEvent, props.template.id)}
-      onDragOver={(e) => props.onDragOver(e as DragEvent, props.template.id)}
-      onDrop={(e) => props.onDrop(e as DragEvent, props.template.id)}
+      onDragStart={(e) => props.onDragStart(e, props.template.id)}
+      onDragOver={(e) => props.onDragOver(e, props.template.id)}
+      onDrop={(e) => props.onDrop(e, props.template.id)}
       onDragEnd={props.onDragEnd}
-      onDragLeave={(e) => props.onDragLeave(e as DragEvent, props.template.id)}
+      onDragLeave={(e) => props.onDragLeave(e, props.template.id)}
       class={`w-full flex flex-col rounded transition-colors list-none relative ${props.dragged ? "opacity-50" : ""}`}
     >
       {/* 挿入線（上） */}
