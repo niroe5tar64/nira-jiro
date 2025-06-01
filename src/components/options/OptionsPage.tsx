@@ -136,7 +136,7 @@ export function OptionsPage(): JSX.Element {
               <div class="flex w-full h-full items-center">
                 <button
                   type="button"
-                  class="flex items-center w-full h-full text-left py-2 px-1 cursor-pointer rounded transition-colors text-sm font-medium hover:bg-green-100 focus:bg-green-200 text-green-800 justify-center"
+                  class="flex items-center w-full h-full text-left py-2 px-1 cursor-pointer rounded transition-colors font-bold hover:bg-green-100 focus:bg-green-200 text-green-800 justify-center"
                   onClick={handleAdd}
                 >
                   <span class="text-lg mr-1 leading-none">＋</span>
