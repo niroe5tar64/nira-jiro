@@ -37,7 +37,9 @@ export function TemplateList(props: TemplateListProps): JSX.Element {
 
   return (
     <div class="p-1 h-full" onDragOver={(e) => e.preventDefault()} onDrop={handleDropOutside}>
-      <div class="text-xs text-green-900 font-bold mb-2 pl-1 tracking-wide">テンプレート一覧</div>
+      <div class="text-base text-green-800 font-extrabold pl-2 my-2 tracking-wide">
+        テンプレート一覧
+      </div>
       <ul class="flex flex-col gap-1">
         <For each={props.templates}>
           {(template) => (
