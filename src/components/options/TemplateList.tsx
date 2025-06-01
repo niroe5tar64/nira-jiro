@@ -27,6 +27,10 @@ export function TemplateList(props: TemplateListProps): JSX.Element {
     resetDnD,
   } = useTemplateListDnD(props.templates, props.onReorder);
 
+  const handleAdd = (e: MouseEvent) => {
+    console.log("追加イベント");
+  };
+
   const handleDelete = (id: string) => (_e: MouseEvent) => {
     console.log("削除イベント実行", id);
   };
@@ -54,6 +58,19 @@ export function TemplateList(props: TemplateListProps): JSX.Element {
           )}
         </For>
       </ul>
+
+      <div class="border-t border-green-700 my-3 w-full">
+        <div class="flex w-full">
+          <button
+            type="button"
+            class="flex items-center w-full text-left py-2 px-1 cursor-pointer rounded transition-colors text-sm font-medium hover:bg-green-100 focus:bg-green-200 text-green-800 justify-center"
+            onClick={handleAdd}
+          >
+            <span class="text-lg mr-1 leading-none">＋</span>
+            <span>テンプレート追加</span>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
