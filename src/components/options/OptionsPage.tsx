@@ -1,5 +1,6 @@
 import { createSignal, onCleanup } from "solid-js";
 import { TemplateForm } from "./TemplateForm";
+import { TemplateList } from "./TemplateList";
 
 export function OptionsPage() {
   // 左右の幅（%）を管理
@@ -35,6 +36,14 @@ export function OptionsPage() {
     document.body.style.cursor = "";
   });
 
+  // テンプレートリストの状態を管理
+  const [templates, setTemplates] = createSignal([
+    { id: "1", title: "バグ報告用テンプレート" },
+    { id: "2", title: "新機能提案テンプレート" },
+    { id: "3", title: "定例議事録テンプレート" },
+  ]);
+  const [selectedId, setSelectedId] = createSignal<string | undefined>(templates()[0].id);
+
   return (
     <div class="flex flex-col h-screen w-full">
       {/* ヘッダー */}
@@ -48,7 +57,12 @@ export function OptionsPage() {
       <div class="flex flex-1 min-h-0 bg-green-50">
         {/* 左側エリア */}
         <div class="h-full overflow-auto" style={{ width: `${leftWidth()}%` }}>
-          <div class="p-4">左側エリア</div>
+          <TemplateList
+            templates={templates()}
+            selectedId={selectedId()}
+            onSelect={setSelectedId}
+            onReorder={setTemplates}
+          />
         </div>
         {/* ドラッグバー */}
         <div
