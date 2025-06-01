@@ -2,6 +2,7 @@ import { type JSX, createSignal, onCleanup, For } from "solid-js";
 import { useTemplateListDnD } from "~/hooks";
 import { TemplateForm } from "./TemplateForm";
 import { TemplateListItem } from "./TemplateListItem";
+import { TemplateIcon } from "./TemplateIcon";
 
 export function OptionsPage(): JSX.Element {
   // 左右の幅（%）を管理
@@ -101,7 +102,8 @@ export function OptionsPage(): JSX.Element {
           onDrop={handleDropOutside}
         >
           {/* 見出し */}
-          <div class="text-base text-green-800 font-extrabold pl-2 my-2 tracking-wide">
+          <div class="text-lg font-extrabold text-green-900 border-b border-green-700 rounded-t px-3 py-2 shadow-sm tracking-wide flex items-center gap-2 select-none">
+            <TemplateIcon />
             テンプレート一覧
           </div>
           {/* リスト本体の高さを見出し・テンプレート追加ボタンエリア分を減らす（例: calc(100% - 48px - 40px)） */}
