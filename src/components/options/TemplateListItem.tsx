@@ -1,7 +1,11 @@
 import type { JSX } from "solid-js";
-import type { Template } from "./TemplateList";
 import { DragHandleIcon } from "./DragHandleIcon";
 import { DeleteIcon } from "./DeleteIcon";
+
+type Template = {
+  id: string;
+  title: string;
+};
 
 export type TemplateListItemProps = {
   template: Template;
