@@ -40,11 +40,11 @@ export function TemplateList(props: TemplateListProps): JSX.Element {
               dragOver={dragOverId() === template.id}
               dragOverPosition={dragOverId() === template.id ? dragOverPosition() : null}
               onSelect={props.onSelect}
-              onDragStart={handleDragStart}
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
+              onDragStart={handleDragStart(template.id)}
+              onDragOver={handleDragOver(template.id)}
+              onDrop={handleDrop(template.id)}
               onDragEnd={resetDnD}
-              onDragLeave={handleDragLeave}
+              onDragLeave={handleDragLeave(template.id)}
             />
           )}
         </For>

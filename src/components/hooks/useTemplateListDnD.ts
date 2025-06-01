@@ -9,7 +9,7 @@ export function useTemplateListDnD(
   const [dragOverId, setDragOverId] = createSignal<string | null>(null);
   const [dragOverPosition, setDragOverPosition] = createSignal<"above" | "below" | null>(null);
 
-  const handleDragStart = (e: DragEvent, id: string) => {
+  const handleDragStart = (id: string) => (e: DragEvent) => {
     setDraggedId(id);
     if (e.dataTransfer) {
       e.dataTransfer.setData("text/plain", id);
@@ -18,7 +18,7 @@ export function useTemplateListDnD(
     }
   };
 
-  const handleDragOver = (e: DragEvent, targetId: string) => {
+  const handleDragOver = (id: string) => (e: DragEvent) => {
     e.preventDefault();
     if (e.dataTransfer) {
       e.dataTransfer.dropEffect = "move";
@@ -27,23 +27,23 @@ export function useTemplateListDnD(
     const rect = target.getBoundingClientRect();
     const offset = e.clientY - rect.top;
     if (offset < rect.height / 2) {
-      setDragOverId(targetId);
+      setDragOverId(id);
       setDragOverPosition("above");
     } else {
-      setDragOverId(targetId);
+      setDragOverId(id);
       setDragOverPosition("below");
     }
   };
 
-  const handleDrop = (e: DragEvent, targetId: string) => {
+  const handleDrop = (id: string) => (e: DragEvent) => {
     e.preventDefault();
     const fromId = draggedId();
-    if (!fromId || fromId === targetId) {
+    if (!fromId || fromId === id) {
       resetDnD();
       return;
     }
     const fromIdx = templates.findIndex((t) => t.id === fromId);
-    const toIdx = templates.findIndex((t) => t.id === targetId);
+    const toIdx = templates.findIndex((t) => t.id === id);
     if (fromIdx === -1 || toIdx === -1) {
       resetDnD();
       return;
@@ -60,8 +60,8 @@ export function useTemplateListDnD(
     onReorder?.(newList);
   };
 
-  const handleDragLeave = (e: DragEvent, targetId: string) => {
-    if (dragOverId() === targetId) {
+  const handleDragLeave = (id: string) => (e: DragEvent) => {
+    if (dragOverId() === id) {
       setDragOverId(null);
       setDragOverPosition(null);
     }

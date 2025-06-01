@@ -8,22 +8,22 @@ export type TemplateListItemProps = {
   dragOver: boolean;
   dragOverPosition: "above" | "below" | null;
   onSelect: (id: string) => void;
-  onDragStart: (e: DragEvent, id: string) => void;
-  onDragOver: (e: DragEvent, id: string) => void;
-  onDrop: (e: DragEvent, id: string) => void;
+  onDragStart: (e: DragEvent) => void;
+  onDragOver: (e: DragEvent) => void;
+  onDrop: (e: DragEvent) => void;
   onDragEnd: () => void;
-  onDragLeave: (e: DragEvent, id: string) => void;
+  onDragLeave: (e: DragEvent) => void;
 };
 
 export function TemplateListItem(props: TemplateListItemProps): JSX.Element {
   return (
     <li
       draggable="true"
-      onDragStart={(e) => props.onDragStart(e, props.template.id)}
-      onDragOver={(e) => props.onDragOver(e, props.template.id)}
-      onDrop={(e) => props.onDrop(e, props.template.id)}
+      onDragStart={props.onDragStart}
+      onDragOver={props.onDragOver}
+      onDrop={props.onDrop}
       onDragEnd={props.onDragEnd}
-      onDragLeave={(e) => props.onDragLeave(e, props.template.id)}
+      onDragLeave={props.onDragLeave}
       class={`w-full flex flex-col rounded transition-colors list-none relative ${props.dragged ? "opacity-50" : ""}`}
     >
       {/* 挿入線（上） */}
