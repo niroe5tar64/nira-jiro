@@ -1,5 +1,6 @@
 import type { JSX } from "solid-js";
 import type { Template } from "./TemplateList";
+import { DragHandleIcon } from "./DragHandleIcon";
 
 export type TemplateListItemProps = {
   template: Template;
@@ -44,21 +45,7 @@ export function TemplateListItem(props: TemplateListItemProps): JSX.Element {
           class="mr-1 px-1 py-2 text-green-700 cursor-grab active:cursor-grabbing rounded flex-shrink-0"
           onMouseDown={(e) => e.stopPropagation()}
         >
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>ドラッグハンドル</title>
-            <circle cx="6" cy="6" r="1.5" fill="currentColor" />
-            <circle cx="6" cy="10" r="1.5" fill="currentColor" />
-            <circle cx="6" cy="14" r="1.5" fill="currentColor" />
-            <circle cx="14" cy="6" r="1.5" fill="currentColor" />
-            <circle cx="14" cy="10" r="1.5" fill="currentColor" />
-            <circle cx="14" cy="14" r="1.5" fill="currentColor" />
-          </svg>
+          <DragHandleIcon />
         </span>
         <span class="truncate min-w-0 flex-1">{props.template.title}</span>
       </button>
