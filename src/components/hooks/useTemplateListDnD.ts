@@ -9,12 +9,16 @@ export function useTemplateListDnD(
   const [dragOverId, setDragOverId] = createSignal<string | null>(null);
   const [dragOverPosition, setDragOverPosition] = createSignal<"above" | "below" | null>(null);
 
-  const handleDragStart = (id: string) => (e: DragEvent) => {
+  const handleDragStart = (id: string) => (e: DragEvent, liElement?: HTMLElement | null) => {
     setDraggedId(id);
     if (e.dataTransfer) {
       e.dataTransfer.setData("text/plain", id);
       e.dataTransfer.effectAllowed = "move";
-      e.dataTransfer.setDragImage(e.currentTarget as HTMLElement, e.offsetX, e.offsetY);
+      if (liElement) {
+        e.dataTransfer.setDragImage(liElement, 0, 0);
+      } else {
+        e.dataTransfer.setDragImage(e.currentTarget as HTMLElement, e.offsetX, e.offsetY);
+      }
     }
   };
 
